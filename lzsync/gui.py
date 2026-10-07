@@ -69,7 +69,7 @@ class Api:
                 remap=remap, log=lambda s: self._emit("log", s), with_result=True,
                 progress=lambda t, d: self._emit("progress", {"type": t, "data": d}))
             data = overview(res)
-            data.update(output=out, missing=missing, text=text)
+            data.update(output=out, output_xml=os.path.splitext(out)[0] + ".xml", missing=missing, text=text)
             self._emit("done", data)
         except Exception as e:  # shown in the window, never a crash
             self._emit("failed", str(e))

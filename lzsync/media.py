@@ -106,6 +106,9 @@ def clip_from_file(path: str, root: str, idx: int) -> Clip:
         has_audio=a is not None,
         frame_duration=1 / fps if fps else None,
         wallclock=wall,
+        width=int(v["width"]) if v and v.get("width") else None,
+        height=int(v["height"]) if v and v.get("height") else None,
+        audio_channels=int(a.get("channels", 0)) or None if a else None,
     )
 
 

@@ -40,6 +40,8 @@ def analyze(inp: str, output: str | None = None, *, no_audio=False, reference=No
     stem = os.path.splitext(inp.rstrip("/"))[0]
     out = output or (stem + " - lzsync.fcpxml")
     fcpxml_io.write(res, meta, out)
+    from . import xmeml_io  # Resolve/Premiere: explicit tracks per device and channel
+    xmeml_io.write(res, os.path.splitext(out)[0] + ".xml", name=os.path.basename(stem) + " - lzsync")
     if json_path:
         report.to_json(res, json_path)
     text = report.summary(res)
@@ -60,7 +62,8 @@ def cmd_analyze(a):
                         jammed=[x for x in (a.jammed or "").split(",") if x],
                         remap=a.remap or [], json_path=a.json, log=log)
     print(text)
-    print(f"\n→ {out}")
+    print(f"\n→ {out}  (Final Cut Pro)")
+    print(f"→ {os.path.splitext(out)[0]}.xml  (DaVinci Resolve, Premiere Pro)")
 
 
 def cmd_compare(a):

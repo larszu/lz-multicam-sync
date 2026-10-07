@@ -50,8 +50,13 @@
 - **Honest output.** Per clip: method, confidence, measurement points, residual.
   Per device: timecode mode, drift, timecode offset to the reference. Material
   from outside the shoot stays out of the timeline.
-- **FCPXML in, FCPXML out.** Works with DaVinci Resolve and Final Cut Pro:
-  `.fcpxml`, `.fcpxmld` bundles (also zipped) or a plain media folder.
+- **The right file for every editor.** Reads `.fcpxml`, `.fcpxmld` bundles
+  (also zipped) or a plain media folder. Writes an **XML for DaVinci Resolve
+  and Premiere Pro** with fixed tracks – one video track per camera, one audio
+  track per device *and channel*, so every lavalier and every recorder channel
+  lands on its own track, picture and sound linked – and an **FCPXML for Final
+  Cut Pro** with the real video formats (5.8K open gate, vertical, 29.97 …) and
+  all audio channels.
 
 <p align="center">
   <img src="docs/screenshots/live-timeline.gif" alt="Live timeline: clips start in input order, audio matches pull them into place, the solver settles the final positions" width="820" />
@@ -71,6 +76,8 @@ What an established commercial sync tool did with a real shoot (90 files, 11 dev
 | Groups without a link to the rest | **Kept in sync among themselves** | – |
 | Explanation per clip | **Method, confidence, residual** | match quality |
 | Live view while syncing | **Real clips moving into place** | progress bar |
+| Export for Resolve / Premiere | **XML with fixed tracks per device and channel** | XML / FCPXML |
+| Duplicated files | **Detected, kept on their own tracks** | – |
 | Price | **Free, MIT** | commercial |
 
 ## Accuracy
@@ -138,8 +145,13 @@ lzsync compare "Shoot - lzsync.fcpxml" "Shoot - other tool.fcpxml"
    plus weak hints from timecode, wall-clock time and `--jammed`; Huber IRLS.
 5. **Checks.** A camera cannot record two files at once; short-clip window
    search; out-of-session material.
-6. **Output.** FCPXML 1.10, one lane per device (video above, recorders below),
-   roles and notes for chronology, sub-groups and unplaced clips.
+6. **Output.** FCPXML has no tracks, only lanes, and Resolve packs connected
+   audio onto the next free track – so a recorder ends up between camera clips.
+   lzsync therefore writes two files: FCP7 XML (`… - lzsync.xml`) with explicit
+   tracks for Resolve and Premiere, structured the way Resolve exports it
+   itself, and FCPXML 1.10 (`… - lzsync.fcpxml`) for Final Cut Pro with real
+   `<format>`s, `audioChannels` and an `audio-channel-source` per clip. Files of
+   one device that overlap (copies, a second card) get an extra track group.
 
 Background and sources: [docs/forschung.md](docs/forschung.md).
 

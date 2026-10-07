@@ -114,8 +114,10 @@ const app = {
     $('stat-placed').textContent = `${d.placed} / ${d.total}`;
     $('stat-ref').textContent = d.reference || '–';
     $('stat-review').textContent = String(d.review.length);
-    state.output = d.output;
-    $('output-path').textContent = d.output;
+    state.output = d.output_xml || d.output;
+    $('output-path').textContent = d.output_xml
+      ? `${d.output_xml.split(/[\\/]/).pop()} – Resolve, Premiere · ${d.output.split(/[\\/]/).pop()} – Final Cut Pro`
+      : d.output;
     renderTables(d);
   },
 };
@@ -204,6 +206,7 @@ function demoOverview() {
   return ({
     total: 76, placed: 75, reference: 'TENTACLE_1', missing: 0,
     output: '/Volumes/MEDIA/DEMO/Multicam-Dreh - lzsync.fcpxml',
+    output_xml: '/Volumes/MEDIA/DEMO/Multicam-Dreh - lzsync.xml',
     devices: [
       dev('A7IV', 'rec-run', 5.0, null, 4, 4, 0, 0, 0),
       dev('FX3_A', 'rec-run', 12.0, null, 16, 16, 0, 0, 0),
@@ -220,7 +223,7 @@ function demoOverview() {
   });
 }
 if (qp.get('demo') === '1' || qp.get('demo') === 'result') {
-  $('version').textContent = 'v0.3.0';
+  $('version').textContent = 'v0.4.0';
   setSource('/Volumes/MEDIA/DEMO/Multicam-Dreh.fcpxmld');
   app.done(demoOverview());
 }
@@ -269,7 +272,7 @@ if (qp.get('demo') === 'sim') {
     k: c.k, start: c.dev === 'OTHER' ? null : truth.get(c.k), group: c.dev === 'OTHER' ? 1 : 0,
     method: c.dev === 'OTHER' ? 'unplaced' : c.dur < 20 ? 'chronology' : 'audio' })) }]);
   setSource('/Volumes/MEDIA/DEMO/Multicam-Dreh.fcpxmld');
-  $('version').textContent = 'v0.3.0';
+  $('version').textContent = 'v0.4.0';
   show('running');
   let i = 0;
   const speed = Number(qp.get('speed') || 1);
