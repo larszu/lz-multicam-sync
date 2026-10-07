@@ -37,7 +37,8 @@ jobs:
           $v = python -c "import lzsync; print(lzsync.__version__)"
           pyinstaller --noconfirm --onefile --windowed --name "LZ-Multicam-Sync-$v" `
             --add-binary "ffmpeg.exe;." --add-binary "ffprobe.exe;." `
-            --collect-submodules lzsync packaging/entry.py
+            --add-data "lzsync/ui;lzsync/ui" --collect-submodules lzsync --collect-submodules webview `
+            packaging/entry.py
       - uses: actions/upload-artifact@v4
         with: { name: windows, path: dist/*.exe }
 

@@ -1,139 +1,107 @@
-"""Minimal window: pick an FCPXML or a media folder, sync, open the result."""
+"""Window (HTML/CSS in a native webview); falls back to Tk if no webview is available."""
 from __future__ import annotations
 
+import json
 import os
-import queue
 import subprocess
 import sys
 import threading
-import tkinter as tk
-from tkinter import filedialog, ttk
+from pathlib import Path
 
 from . import __version__
-from .cli import analyze
+
+UI = Path(getattr(sys, "_MEIPASS", Path(__file__).parent.parent)) / "lzsync" / "ui"
+if not UI.exists():
+    UI = Path(__file__).parent / "ui"
 
 
-class App(tk.Tk):
+class Api:
     def __init__(self):
-        super().__init__()
-        self.title(f"LZ Multicam Sync {__version__}")
-        self.geometry("820x560")
-        self.minsize(640, 420)
-        self.q: queue.Queue = queue.Queue()
-        self.out: str | None = None
+        self.window = None
+        self.busy = False
 
-        f = ttk.Frame(self, padding=12)
-        f.pack(fill="both", expand=True)
-        f.columnconfigure(1, weight=1)
-
-        ttk.Label(f, text="Quelle").grid(row=0, column=0, sticky="w")
-        self.src = tk.StringVar()
-        ttk.Entry(f, textvariable=self.src).grid(row=0, column=1, sticky="ew", padx=6)
-        b = ttk.Frame(f)
-        b.grid(row=0, column=2)
-        ttk.Button(b, text="FCPXML …", command=self.pick_file).pack(side="left")
-        ttk.Button(b, text="Ordner …", command=self.pick_dir).pack(side="left", padx=(4, 0))
-
-        ttk.Label(f, text="Referenzgerät").grid(row=1, column=0, sticky="w", pady=(8, 0))
-        self.ref = tk.StringVar()
-        ttk.Entry(f, textvariable=self.ref).grid(row=1, column=1, sticky="ew", padx=6, pady=(8, 0))
-        ttk.Label(f, text="optional, z. B. TENTACLE_1").grid(row=1, column=2, sticky="w", pady=(8, 0))
-
-        ttk.Label(f, text="Gejammt").grid(row=2, column=0, sticky="w", pady=(8, 0))
-        self.jam = tk.StringVar()
-        ttk.Entry(f, textvariable=self.jam).grid(row=2, column=1, sticky="ew", padx=6, pady=(8, 0))
-        ttk.Label(f, text="Geräte mit gemeinsamem TC, Komma").grid(row=2, column=2, sticky="w", pady=(8, 0))
-
-        ttk.Label(f, text="Pfad ersetzen").grid(row=3, column=0, sticky="w", pady=(8, 0))
-        self.remap = tk.StringVar()
-        ttk.Entry(f, textvariable=self.remap).grid(row=3, column=1, sticky="ew", padx=6, pady=(8, 0))
-        ttk.Label(f, text="ALT=NEU, wenn das Laufwerk anders heißt").grid(row=3, column=2, sticky="w", pady=(8, 0))
-
-        opts = ttk.Frame(f)
-        opts.grid(row=4, column=1, sticky="w", padx=6, pady=(8, 0))
-        self.first = tk.BooleanVar()
-        self.noaudio = tk.BooleanVar()
-        ttk.Checkbutton(opts, text="nur erster Audiokanal", variable=self.first).pack(side="left")
-        ttk.Checkbutton(opts, text="ohne Audio (nur Timecode)", variable=self.noaudio).pack(side="left", padx=12)
-
-        act = ttk.Frame(f)
-        act.grid(row=5, column=0, columnspan=3, sticky="ew", pady=10)
-        self.go = ttk.Button(act, text="Synchronisieren", command=self.start)
-        self.go.pack(side="left")
-        self.show = ttk.Button(act, text="Ergebnis im Finder zeigen", command=self.reveal, state="disabled")
-        self.show.pack(side="left", padx=8)
-        self.bar = ttk.Progressbar(act, mode="indeterminate", length=160)
-        self.bar.pack(side="right")
-
-        self.log = tk.Text(f, wrap="none", font=("Menlo" if sys.platform == "darwin" else "Consolas", 11))
-        self.log.grid(row=6, column=0, columnspan=3, sticky="nsew")
-        f.rowconfigure(6, weight=1)
-        self.after(100, self.pump)
+    # called from JS -------------------------------------------------------
+    def version(self):
+        return __version__
 
     def pick_file(self):
-        p = filedialog.askopenfilename(filetypes=[("FCPXML", "*.fcpxml *.fcpxmld"), ("Alle", "*")])
-        if p:
-            self.src.set(p)
+        import webview
+        r = self.window.create_file_dialog(webview.FileDialog.OPEN, allow_multiple=False,
+                                           file_types=("FCPXML (*.fcpxml;*.fcpxmld)", "Alle Dateien (*.*)"))
+        return r[0] if r else None
 
-    def pick_dir(self):
-        p = filedialog.askdirectory()
-        if p:
-            self.src.set(p)
+    def pick_folder(self):
+        import webview
+        r = self.window.create_file_dialog(webview.FileDialog.FOLDER)
+        return r[0] if r else None
 
-    def write(self, s: str):
-        self.q.put(s)
+    def exists(self, path):
+        return bool(path) and os.path.exists(path)
 
-    def pump(self):
-        while not self.q.empty():
-            item = self.q.get()
-            if isinstance(item, tuple):  # done
-                self.bar.stop()
-                self.go.configure(state="normal")
-                self.out = item[1]
-                if self.out:
-                    self.show.configure(state="normal")
-                continue
-            self.log.insert("end", item + "\n")
-            self.log.see("end")
-        self.after(100, self.pump)
+    def run(self, opts: dict):
+        if self.busy:
+            return False
+        self.busy = True
+        threading.Thread(target=self._work, args=(opts,), daemon=True).start()
+        return True
 
-    def start(self):
-        src = self.src.get().strip()
-        if not src or not os.path.exists(src):
-            self.write("Bitte eine FCPXML-Datei oder einen Medienordner wählen.")
-            return
-        self.log.delete("1.0", "end")
-        self.go.configure(state="disabled")
-        self.show.configure(state="disabled")
-        self.bar.start(12)
-        threading.Thread(target=self.work, args=(src,), daemon=True).start()
-
-    def work(self, src):
-        try:
-            text, out = analyze(src, no_audio=self.noaudio.get(), reference=self.ref.get().strip(),
-                                channels="first" if self.first.get() else "mix",
-                                jammed=[x.strip() for x in self.jam.get().split(",") if x.strip()],
-                                remap=[self.remap.get().strip()] if "=" in self.remap.get() else [],
-                                log=self.write)
-            self.write("\n" + text + f"\n\n→ {out}")
-            self.q.put(("done", out))
-        except Exception as e:  # show, don't crash the window
-            self.write(f"Fehler: {e}")
-            self.q.put(("done", None))
-
-    def reveal(self):
-        if not self.out:
-            return
+    def reveal(self, path):
         if sys.platform == "darwin":
-            subprocess.run(["open", "-R", self.out])
+            subprocess.run(["open", "-R", path])
         elif os.name == "nt":
-            subprocess.run(["explorer", "/select,", os.path.normpath(self.out)])
+            subprocess.run(["explorer", "/select,", os.path.normpath(path)])
         else:
-            subprocess.run(["xdg-open", os.path.dirname(self.out)])
+            subprocess.run(["xdg-open", os.path.dirname(path)])
+
+    # worker ---------------------------------------------------------------
+    def _emit(self, fn, payload):
+        self.window.evaluate_js(f"window.app && app.{fn}({json.dumps(payload, ensure_ascii=False)})")
+
+    def _work(self, o):
+        from .cli import analyze
+        from .report import overview
+        try:
+            remap = [o["remap"].strip()] if "=" in (o.get("remap") or "") else []
+            text, out, res, missing = analyze(
+                o["source"], no_audio=bool(o.get("noAudio")), reference=(o.get("reference") or "").strip(),
+                channels="first" if o.get("firstChannel") else "mix",
+                jammed=[x.strip() for x in (o.get("jammed") or "").split(",") if x.strip()],
+                remap=remap, log=lambda s: self._emit("log", s), with_result=True,
+                progress=lambda t, d: self._emit("progress", {"type": t, "data": d}))
+            data = overview(res)
+            data.update(output=out, missing=missing, text=text)
+            self._emit("done", data)
+        except Exception as e:  # shown in the window, never a crash
+            self._emit("failed", str(e))
+        finally:
+            self.busy = False
+
+
+def _on_drop(api, e):
+    files = (e.get("dataTransfer") or {}).get("files") or []
+    if files and files[0].get("pywebviewFullPath"):
+        api._emit("dropped", files[0]["pywebviewFullPath"])
 
 
 def main():
-    App().mainloop()
+    try:
+        import webview
+    except Exception:
+        from .gui_tk import main as tk_main
+        return tk_main()
+    api = Api()
+    api.window = webview.create_window(
+        f"LZ Multicam Sync {__version__}", url=str(UI / "index.html"), js_api=api,
+        width=1080, height=760, min_size=(720, 520), background_color="#132040")
+
+    def wire():
+        try:
+            from webview.dom import DOMEventHandler
+            api.window.dom.document.events.drop += DOMEventHandler(lambda e: _on_drop(api, e), True, True)
+        except Exception:
+            pass  # drag & drop is a convenience; the pick buttons always work
+
+    webview.start(wire)
 
 
 if __name__ == "__main__":

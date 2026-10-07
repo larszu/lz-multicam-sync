@@ -59,3 +59,33 @@ def to_json(res: SyncResult, path: str) -> None:
     }
     with open(path, "w") as f:
         json.dump(data, f, indent=1, ensure_ascii=False)
+
+
+def overview(res: SyncResult) -> dict:
+    """Same content as summary(), structured for the window."""
+    by_dev = defaultdict(list)
+    for r in res.clips:
+        by_dev[r.clip.device].append(r)
+    tcoff = {}
+    for d, rs in by_dev.items():
+        v = sorted(r.start - r.clip.local for r in rs if r.method == "audio" and r.group == 0)
+        if v and res.tc_mode.get(d) == "free-run":
+            tcoff[d] = v[len(v) // 2]
+    ref_off = tcoff.get(res.reference)
+    devices = []
+    for d in sorted(by_dev, key=natural_key):
+        rs = by_dev[d]
+        c = Counter(r.method if r.group == 0 else "unplaced" for r in rs)
+        devices.append(dict(
+            name=d, tc=res.tc_mode.get(d, "?"), ppm=res.drift_ppm.get(d),
+            tc_offset=(tcoff[d] - ref_off) if d in tcoff and ref_off is not None else None,
+            clips=len(rs), audio=c["audio"], timecode=c["timecode"], chronology=c["chronology"],
+            unplaced=c["unplaced"], reference=d == res.reference,
+            video=any(r.clip.has_video for r in rs)))
+    review = [dict(device=r.clip.device, name=r.clip.name, method=LABEL[r.method] if r.group == 0 else "Teilgruppe",
+                   confidence=round(r.confidence, 2), note=r.note)
+              for r in sorted(res.clips, key=lambda r: (natural_key(r.clip.device), natural_key(r.clip.name)))
+              if r.method in ("chronology", "unplaced") or r.group != 0 or r.confidence < 0.5]
+    placed = sum(1 for r in res.clips if r.start is not None and r.group == 0)
+    return dict(total=len(res.clips), placed=placed, reference=res.reference, devices=devices,
+                review=review, warnings=res.warnings)

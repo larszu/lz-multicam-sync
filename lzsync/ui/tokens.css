@@ -1,0 +1,118 @@
+/* ============================================================
+   Lars Zumpe Medienproduktion · Web- und App-Tokens 2026
+   Grundlage: Brand Guide 2.0, lzm_web_tokens.css (Kit 10_web_migration).
+   Marken-Hexwerte sind unverändert; alles Weitere ist daraus gemischt.
+   ============================================================ */
+
+@layer reset, tokens, base, components, utilities;
+
+@layer tokens {
+  :root {
+    color-scheme: dark light;
+
+    /* Palette – nicht ändern */
+    --deep-navy: #132040;
+    --navy: #1D324F;
+    --off-white: #F6F5F0;
+    --eisblau: #E1ECEF;
+    --stahlblau: #8C9CB3;
+    --schiefer: #5C6B85;
+    --tally: #D6402E;
+
+    /* Flächen: dunkel | hell */
+    --surface-0: light-dark(var(--off-white), var(--deep-navy));
+    --surface-1: light-dark(#FFFFFF, var(--navy));
+    --surface-2: light-dark(var(--eisblau), color-mix(in oklab, var(--navy), var(--off-white) 6%));
+    --surface-3: light-dark(#FFFFFF, color-mix(in oklab, var(--navy), var(--off-white) 10%));
+    --surface-4: light-dark(#FFFFFF, color-mix(in oklab, var(--navy), var(--off-white) 14%));
+    --scrim: color-mix(in oklab, var(--deep-navy) 70%, transparent);
+
+    /* Text */
+    --text-strong: light-dark(var(--navy), var(--off-white));
+    --text: light-dark(var(--navy), var(--eisblau));
+    --text-muted: light-dark(var(--schiefer), var(--stahlblau));
+    --text-on-accent: var(--navy);
+
+    /* Linien */
+    --line-1: light-dark(color-mix(in oklab, var(--navy) 10%, transparent), color-mix(in oklab, var(--off-white) 10%, transparent));
+    --line-2: light-dark(color-mix(in oklab, var(--navy) 18%, transparent), color-mix(in oklab, var(--off-white) 16%, transparent));
+    --line-3: light-dark(color-mix(in oklab, var(--navy) 40%, transparent), color-mix(in oklab, var(--off-white) 32%, transparent));
+    --line-head: var(--stahlblau);   /* Kopflinie */
+
+    /* Akzent = Off-White auf Dunkel, Navy auf Hell. Nie Rot. */
+    --accent: light-dark(var(--navy), var(--off-white));
+    --accent-text: light-dark(var(--off-white), var(--navy));
+
+    /* Zustandsschicht */
+    --state: light-dark(var(--navy), var(--off-white));
+    --state-hover: 6%;
+    --state-press: 10%;
+
+    /* Signal – Claim-Punkt, Button-Punkt (Marke), Fokus, echte Tally-Zustände */
+    --signal: var(--tally);
+    --focus-ring: 2px solid var(--signal);
+    --focus-offset: 2px;
+
+    /* Status – nur Meldungen */
+    --ok: #2F7D5C;  --warn: #C8892B;  --error: #B04A3F;
+
+    /* Tiefe: Haarlinie + Flächenstufe. --elev-float ist die einzige,
+       bewusste Abweichung vom Guide; auf none setzen, wenn unerwünscht. */
+    --elev-float: 0 12px 32px light-dark(color-mix(in oklab, var(--navy) 12%, transparent), color-mix(in oklab, #050A19 55%, transparent));
+    --radius: 0;
+
+    /* Typografie */
+    --font: 'Public Sans Variable', 'Public Sans', system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
+    --fs-display: clamp(3rem, 7vw + 1rem, 8rem);   /* Marke: Claim / Hero */
+    --fs-h1: clamp(2rem, 3vw + 1rem, 3.5rem);
+    --fs-h2: clamp(1.375rem, 1vw + 1rem, 1.75rem);
+    --fs-sub: clamp(1.125rem, .5vw + 1rem, 1.5rem);
+    --fs-body: clamp(1rem, .25vw + .95rem, 1.125rem);
+    --fs-ui: .875rem;       /* Werkzeug */
+    --fs-ui-sm: .8125rem;
+    --fs-kicker: .75rem;
+    --track-display: -.015em;
+    --track-kicker: .18em;
+
+    /* Raum */
+    --space-1: 4px;  --space-2: 8px;  --space-3: 12px;  --space-4: 16px;
+    --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
+    --space-section: clamp(64px, 10vw, 160px);
+    --page-margin: clamp(16px, 5vw, 80px);
+    --page-max: 1280px;
+    --gutter: 24px;
+
+    /* Dichte (Werkzeug) */
+    --control-h: 32px;
+    --row-h: 32px;
+
+    /* Bewegung */
+    --ease: cubic-bezier(.2, .8, .2, 1);
+    --dur-1: 120ms;  --dur-2: 200ms;  --dur-3: 350ms;
+  }
+
+  [data-theme="dark"]  { color-scheme: dark; }
+  [data-theme="light"] { color-scheme: light; }
+
+  [data-density="compact"]     { --control-h: 28px; --row-h: 28px; }
+  [data-density="comfortable"] { --control-h: 40px; --row-h: 40px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root { --dur-2: 0ms; --dur-3: 120ms; }
+  }
+}
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; border-radius: var(--radius); }
+  html { -webkit-text-size-adjust: none; text-size-adjust: none; interpolate-size: allow-keywords; }
+  body {
+    margin: 0; background: var(--surface-0); color: var(--text);
+    font: 400 var(--fs-body)/1.6 var(--font); font-synthesis: none;
+  }
+  h1, h2, h3 { color: var(--text-strong); text-wrap: balance; margin: 0; }
+  p { text-wrap: pretty; max-width: 68ch; }
+  :focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
+  :target, [id] { scroll-margin-top: 96px; }
+  ::selection { background: color-mix(in oklab, var(--accent) 25%, transparent); }
+  @view-transition { navigation: auto; }
+}
