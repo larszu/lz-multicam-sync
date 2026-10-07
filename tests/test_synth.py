@@ -53,3 +53,14 @@ def test_out_of_session_and_unrelated_stay_out(shoot):
     m = {r.clip.name: r for r in res.clips}
     assert m["CAM_C_0001.wav"].start is None  # two hours before the shoot
     assert m["OTHER_0001.wav"].start is None
+
+
+def test_duplicate_recording_keeps_everything_synced(tmp_path):
+    devs = [
+        Device("REC", "none", [(0, 150), (0, 150)], noise=0.02, has_video=False),  # a file and its copy
+        Device("CAM", "rec-run", [(10, 60), (90, 50)], noise=0.08),
+    ]
+    clips, truth = synth.build(str(tmp_path), devs, 160, seed=9)
+    res = engine.run(clips, engine.Options(cache_dir=str(tmp_path / ".cache")), log=lambda s: None)
+    assert all(r.start is not None and r.group == 0 for r in res.clips)
+    assert any("Duplikat" in w for w in res.warnings)

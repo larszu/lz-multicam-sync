@@ -88,6 +88,9 @@ def read(path: str) -> tuple[list[Clip], dict]:
                 frame_duration=fd,
                 wallclock=wallclock_from_name(name),
                 xml=a,
+                width=int(fmt.get("width")) if fmt is not None and fmt.get("width") else None,
+                height=int(fmt.get("height")) if fmt is not None and fmt.get("height") else None,
+                audio_channels=int(a.get("audioChannels")) if a.get("audioChannels") else None,
             )
         )
     seq = next(root.iter("sequence"), None)
@@ -140,17 +143,50 @@ def _snap(x: float, step: Fraction, mode: str) -> Fraction:
     return n * step
 
 
-def write(result: SyncResult, meta: dict, path: str, project: str | None = None) -> None:
-    """Timeline: one gap in the spine, every clip connected to it, one lane per device."""
-    clips = [r for r in result.clips]
-    fmts = meta.get("formats") or {}
-    vids = [r.clip for r in clips if r.clip.has_video and r.clip.xml is not None]
-    seq_fmt_id = meta.get("sequence_format") or (
-        Counter(c.xml.get("format") for c in vids).most_common(1)[0][0] if vids else None
-    )
-    seq_fmt = fmts.get(seq_fmt_id)
-    fd = rt(seq_fmt.get("frameDuration")) if seq_fmt is not None else Fraction(1, 25)
+_RATE_TAG = {Fraction(1, 24): "24", Fraction(1001, 24000): "2398", Fraction(1, 25): "25",
+             Fraction(1, 30): "30", Fraction(1001, 30000): "2997", Fraction(1, 50): "50",
+             Fraction(1, 60): "60", Fraction(1001, 60000): "5994"}
+_STD_SIZES = {(1280, 720), (1920, 1080), (2048, 1080), (3840, 2160), (4096, 2160)}
 
+
+def format_name(w: int, h: int, fd: Fraction | None) -> str:
+    """Final Cut's names: FFVideoFormat3840x2160p25; odd sizes or rates are RateUndefined."""
+    tag = _RATE_TAG.get(fd) if fd else None
+    if (w, h) in _STD_SIZES and tag:
+        return f"FFVideoFormat{w}x{h}p{tag}"
+    return "FFVideoFormatRateUndefined"
+
+
+def _formats(clips, meta) -> tuple[dict, dict]:
+    """Existing formats from the input FCPXML plus one per real video format found by ffprobe."""
+    fmts = dict(meta.get("formats") or {})
+    by_key, clip_fmt = {}, {}
+    for c in clips:
+        if c.xml is not None and c.xml.get("format"):
+            clip_fmt[c.id] = c.xml.get("format")
+            continue
+        if not (c.has_video and c.width and c.height):
+            continue
+        fd = c.frame_duration or Fraction(1, 25)
+        key = (c.width, c.height, fd)
+        if key not in by_key:
+            fid = f"r_fmt{len(by_key) + 1}"
+            by_key[key] = fid
+            fmts[fid] = ET.Element("format", id=fid, name=format_name(c.width, c.height, fd),
+                                   frameDuration=ft(fd), width=str(c.width), height=str(c.height),
+                                   fieldOrder="progressive")
+        clip_fmt[c.id] = by_key[key]
+    return fmts, clip_fmt
+
+
+def layout(result: SyncResult):
+    """Timeline position of every clip (seconds from 0) and one lane per device.
+
+    Main timeline first; groups that only synced among themselves follow as
+    blocks keeping their internal timing; single unplaced files go last, per
+    lane in file order. Shared by every exporter so they agree.
+    """
+    clips = list(result.clips)
     main = [r for r in clips if r.start is not None and r.group == 0]
     t0 = min((r.start for r in main), default=0.0)
     end = max((r.start - t0 + float(r.clip.duration) for r in main), default=0.0)
@@ -175,18 +211,34 @@ def write(result: SyncResult, meta: dict, path: str, project: str | None = None)
         x = lane_cur[r.clip.device]
         lane_cur[r.clip.device] = x + float(r.clip.duration) + 1.0
         rows.append((r, x))
+    return rows, lane
+
+
+def write(result: SyncResult, meta: dict, path: str, project: str | None = None) -> None:
+    """Timeline: one gap in the spine, every clip connected to it, one lane per device."""
+    clips = [r for r in result.clips]
+    fmts, clip_fmt = _formats([r.clip for r in clips], meta)
+    weight = Counter()
+    for r in clips:
+        if r.clip.has_video and r.clip.id in clip_fmt:
+            weight[clip_fmt[r.clip.id]] += float(r.clip.duration)
+    seq_fmt_id = meta.get("sequence_format") or (weight.most_common(1)[0][0] if weight else None)
+    seq_fmt = fmts.get(seq_fmt_id)
+    fd = rt(seq_fmt.get("frameDuration")) if seq_fmt is not None else Fraction(1, 25)
+
+    rows, lane = layout(result)
     total = max(g + float(r.clip.duration) for r, g in rows) if rows else 0.0
 
     root = ET.Element("fcpxml", version="1.10")
     res = ET.SubElement(root, "resources")
     for f in fmts.values():
         res.append(copy.deepcopy(f))
-    if seq_fmt is None:
+    if seq_fmt is None:  # audio-only project
         seq_fmt_id = "r_lzsync_fmt"
-        ET.SubElement(res, "format", id=seq_fmt_id, name="FFVideoFormat1080p25",
+        ET.SubElement(res, "format", id=seq_fmt_id, name="FFVideoFormat1920x1080p25",
                       frameDuration="1/25s", width="1920", height="1080")
     for r, _ in rows:
-        res.append(copy.deepcopy(r.clip.xml) if r.clip.xml is not None else _asset_xml(r.clip))
+        res.append(copy.deepcopy(r.clip.xml) if r.clip.xml is not None else _asset_xml(r.clip, clip_fmt.get(r.clip.id)))
     lib = ET.SubElement(root, "library")
     ev = ET.SubElement(lib, "event", name=meta.get("event") or "lzsync")
     pr = ET.SubElement(ev, "project", name=project or f"{meta.get('project') or 'lzsync'} - lzsync")
@@ -215,19 +267,28 @@ def write(result: SyncResult, meta: dict, path: str, project: str | None = None)
         if role:
             attrs["audioRole"] = role
         ac = ET.SubElement(gap, "asset-clip", **attrs)
-        if c.xml is not None and c.xml.get("format"):
-            ac.set("format", c.xml.get("format"))
+        if c.id in clip_fmt:
+            ac.set("format", clip_fmt[c.id])
         if r.method != "audio" or r.group != 0:
             ET.SubElement(ac, "note").text = f"lzsync: {r.method}, conf {r.confidence:.2f}. {r.note}".strip()
+        if c.has_audio:  # every channel, not just a stereo mix of the first two
+            n = c.audio_channels or 2
+            ET.SubElement(ac, "audio-channel-source", srcCh=", ".join(str(i + 1) for i in range(n)),
+                          role=role or "dialogue")
     ET.indent(root, "    ")
     with open(path, "wb") as fh:
         fh.write(b'<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE fcpxml>\n')
         fh.write(ET.tostring(root, encoding="utf-8"))
 
 
-def _asset_xml(c: Clip) -> ET.Element:
+def _asset_xml(c: Clip, fmt: str | None = None) -> ET.Element:
     a = ET.Element("asset", id=c.id, name=c.name, start=ft(c.tc_start or 0), duration=ft(c.duration),
                    hasVideo="1" if c.has_video else "0", hasAudio="1" if c.has_audio else "0")
+    if fmt:
+        a.set("format", fmt)
+    if c.has_audio:
+        a.set("audioSources", "1")
+        a.set("audioChannels", str(c.audio_channels or 2))
     if c.path:
         ET.SubElement(a, "media-rep", kind="original-media", src=Path(c.path).absolute().as_uri())
     return a

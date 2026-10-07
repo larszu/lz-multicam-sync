@@ -246,6 +246,10 @@ def run(clips: list[Clip], opt: Options | None = None, log: Log = print) -> Sync
         for i in bad:
             warnings.append(f"{i}: überlappt mit Nachbardatei derselben Kamera – Treffer verworfen")
         points = [p for p in points if p.a not in bad and p.b not in bad]
+        if ref_island in bad or ref_island not in {q for p in points for q in (p.a, p.b)}:
+            linked = {q for p in points for q in (p.a, p.b)}
+            cand = [i for i in isl if i.id in linked and (not opt.reference or i.device == opt.reference)]
+            ref_island = max(cand, key=lambda i: (recorder(i), audio_s(i), i.id)).id if cand else None
         offsets, drift, comp, resid = graph.solve(dev_of, points, priors, wall, opt.wall_sigma, ref_island)
 
     evidence = defaultdict(list)
@@ -285,6 +289,7 @@ def run(clips: list[Clip], opt: Options | None = None, log: Log = print) -> Sync
         groups[g] = groups.get(g, 0) + len(i.clips)
 
     _tc_jumps(results, modes, warnings)
+    _duplicates(results, warnings)
     _place_by_neighbours(isl, results, comp, warnings)
     if opt.use_audio:
         _search_short(results, cache, opt, log, drift)
@@ -301,6 +306,27 @@ def run(clips: list[Clip], opt: Options | None = None, log: Log = print) -> Sync
     # positive = device clock runs fast against the reference
     rate = {d: -v for d, v in drift.items()}
     return SyncResult(results, rate, modes, ref_name, edges, warnings)
+
+
+def _duplicates(results, warnings):
+    """Same device, same start timecode: almost always a copied or recovered file."""
+    seen = {}
+    for r in sorted(results, key=lambda r: timecode.natural_key(r.clip.name)):
+        c = r.clip
+        if c.tc_start:
+            key = (c.device, "tc", round(float(c.tc_start) * 25))
+        elif r.start is not None and r.method == "audio":  # no timecode: same solved start
+            key = (c.device, "pos", round(r.start * 10))
+        else:
+            continue
+        if key in seen:
+            other = seen[key]
+            longer = max((other, c), key=lambda x: x.duration)
+            warnings.append(f"{c.device}: {c.name} und {other.name} beginnen an derselben Stelle – vermutlich ein "
+                            f"Duplikat (längere Datei: {longer.name})")
+            r.note = (r.note + f"; vermutlich Duplikat von {other.name}").strip("; ")
+        else:
+            seen[key] = c
 
 
 def _tc_jumps(results, modes, warnings, frames: float = 2, fps: float = 25):
@@ -339,7 +365,10 @@ def _overlaps(isl, offsets, drift, comp) -> set[str]:
     for li in by_dev.values():
         li = sorted(li, key=lambda i: _span(i, offsets, drift)[0])
         for x, y in zip(li, li[1:]):
-            if _span(x, offsets, drift)[1] - _span(y, offsets, drift)[0] > 0.5:
+            sx, sy = _span(x, offsets, drift), _span(y, offsets, drift)
+            if abs(sx[0] - sy[0]) < 0.1:
+                continue  # same start: a copied file, not a wrong match – both stay
+            if sx[1] - sy[0] > 0.5:
                 bad.add(min((x, y), key=lambda i: i.length).id)
     return bad
 

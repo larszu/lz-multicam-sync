@@ -20,6 +20,9 @@ class Clip:
     wallclock: float | None = None  # recording start, epoch seconds (device clock)
     xml: object | None = None  # original <asset> element when read from FCPXML
     local: float = 0.0  # unwrapped device time of the clip start
+    width: int | None = None
+    height: int | None = None
+    audio_channels: int | None = None
 
 
 @dataclass
