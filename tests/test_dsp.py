@@ -33,3 +33,23 @@ def test_locate_short_template():
     pos, sharp, uniq = dsp.locate(long, short, sr)
     assert abs(pos - (12 + 123 / sr)) < 1e-4
     assert uniq > 2
+
+
+def test_long_overlap_beats_short_chance_peak():
+    """Half an hour at ncc 0.12 is more evidence than 20 s at ncc 0.45."""
+    lags = np.arange(-50000, 50000)
+    rng = np.random.default_rng(3)
+    overlap = np.full(lags.size, 200000.0)
+    ncc = rng.normal(0, 1, lags.size) / np.sqrt(overlap / 10)
+    ncc[30000], overlap[30000] = 0.45, 2000.0  # short chance overlap
+    ncc[70000] = 0.12  # long real overlap
+    p = dsp.peaks(lags, ncc, overlap, 100)
+    assert p[0]["lag"] == lags[70000]
+    assert p[0]["z"] > 10
+
+
+def test_significance_floor_on_tiny_tracks():
+    ncc = np.zeros(1000)
+    ncc[500] = 0.5
+    overlap = np.full(1000, 1000.0)
+    assert dsp.significance(ncc, overlap).max() < 100

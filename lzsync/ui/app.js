@@ -220,7 +220,7 @@ function demoOverview() {
   });
 }
 if (qp.get('demo') === '1' || qp.get('demo') === 'result') {
-  $('version').textContent = 'v0.2.0';
+  $('version').textContent = 'v0.3.0';
   setSource('/Volumes/MEDIA/DEMO/Multicam-Dreh.fcpxmld');
   app.done(demoOverview());
 }
@@ -269,7 +269,7 @@ if (qp.get('demo') === 'sim') {
     k: c.k, start: c.dev === 'OTHER' ? null : truth.get(c.k), group: c.dev === 'OTHER' ? 1 : 0,
     method: c.dev === 'OTHER' ? 'unplaced' : c.dur < 20 ? 'chronology' : 'audio' })) }]);
   setSource('/Volumes/MEDIA/DEMO/Multicam-Dreh.fcpxmld');
-  $('version').textContent = 'v0.2.0';
+  $('version').textContent = 'v0.3.0';
   show('running');
   let i = 0;
   const speed = Number(qp.get('speed') || 1);
