@@ -26,8 +26,7 @@ def analyze(inp: str, output: str | None = None, *, no_audio=False, reference=No
     if os.path.isdir(inp) and not inp.rstrip("/").endswith(".fcpxmld"):
         clips, meta = media.scan(inp), {"formats": {}, "event": os.path.basename(inp.rstrip("/"))}
     else:
-        src = os.path.join(inp, "Info.fcpxml") if os.path.isdir(inp) else inp
-        clips, meta = fcpxml_io.read(src)
+        clips, meta = fcpxml_io.read(inp)
     _remap(clips, [m.split("=", 1) for m in remap])
     missing = [c for c in clips if not (c.path and os.path.exists(c.path))]
     if missing and not no_audio:
@@ -36,11 +35,18 @@ def analyze(inp: str, output: str | None = None, *, no_audio=False, reference=No
                          channels=channels, split_gap=split_gap, jammed=tuple(jammed))
     log(f"{len(clips)} Clips, {len({c.device for c in clips})} Geräte")
     res = engine.run(clips, opt, log)
-    out = output or (os.path.splitext(inp.rstrip("/"))[0] + " - lzsync.fcpxml")
+    stem = os.path.splitext(inp.rstrip("/"))[0]
+    out = output or (stem + " - lzsync.fcpxml")
     fcpxml_io.write(res, meta, out)
     if json_path:
         report.to_json(res, json_path)
-    return report.summary(res), out
+    text = report.summary(res)
+    if missing and not no_audio:
+        hint = (f"ACHTUNG: {len(missing)} von {len(clips)} Mediendateien nicht gefunden, "
+                f"z. B. {missing[0].path}\nOhne Medien kein Audio-Abgleich – Laufwerk anschließen "
+                "(oder Pfad mit --remap ALT=NEU umbiegen) und erneut starten.\n\n")
+        text = hint + text
+    return text, out
 
 
 def cmd_analyze(a):
