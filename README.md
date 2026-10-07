@@ -42,6 +42,7 @@ Ergebnis: `… - lzsync.fcpxml` (in Resolve importieren), eine Übersicht im Ter
 
 ## Stand
 
+- Projektgröße synthetisch (`benchmarks/scale.py`: 2 h, 9 Geräte, 76 Dateien, Rec-Run, Drift −40…+25 ppm, Mitternacht, Kurzclips): 75/76 Clips platziert (der fehlende ist absichtlich Fremdmaterial), größter Fehler 0,17 ms, alle Driften auf 0,1 ppm, 17 ms Jam-Versatz zwischen zwei Tentacles erkannt; 2:40 min auf einem M-Mac.
 - Synthetische Drehs mit bekannter Wahrheit (Drift ±40 ppm, Hall, Tiefpass, Rauschen, Rec-Run, Mitternacht, 1-s-Clips, Fremdmaterial): Fehler unter 1 ms, Drift auf < 1 ppm.
 - Echter Multicam-Dreh (90 Clips, 11 Geräte), nur Metadaten, weil die Medien nicht angeschlossen waren: TC-Modus aller Kameras richtig erkannt, Anordnung innerhalb jeder Free-Run-Kamera wie bei Syncaila bis auf ≤ 0,25 s – der Rest ist Uhrendrift, die erst der Audio-Lauf misst. Details: [docs/syncaila-analyse.md](docs/syncaila-analyse.md).
 - **Offen:** Audio-Lauf gegen das echte Material und Vergleich mit dem Syncaila-Ergebnis (`lzsync compare`), sobald das Medienlaufwerk angeschlossen ist.
@@ -66,7 +67,7 @@ MIT. Die Windows-EXE enthält ffmpeg (GPL, [gyan.dev](https://www.gyan.dev/ffmpe
 | Option | Wirkung |
 |---|---|
 | `--remap ALT=NEU` | Pfadpräfix ersetzen, wenn das Laufwerk anders heißt |
-| `--reference GERÄT` | Referenzuhr festlegen (Standard: längste Aufnahme im Audio-Graphen) |
+| `--reference GERÄT` | Referenzuhr festlegen (Standard: Audiorecorder mit der meisten Aufnahmezeit, sonst die Kamera mit der meisten) |
 | `--jammed A,B,C` | Geräte mit gemeinsam gejammtem TC, verbindet sie auch ohne Audio |
 | `--channels first` | nur ersten Kanal statt Mix (gegen Phasenauslöschung) |
 | `--no-audio` | nur Timecode und Metadaten |
