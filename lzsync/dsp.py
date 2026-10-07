@@ -44,7 +44,7 @@ class Track:
     def spec(self, n: int):
         if n not in self._spec:
             self._spec[n] = (rfft(self.m, n), rfft(self.v, n), rfft(self.v * self.v, n))
-            if len(self._spec) > 3:
+            if len(self._spec) > 4:
                 self._spec.pop(next(iter(self._spec)))
         return self._spec[n]
 
@@ -54,7 +54,8 @@ def masked_ncc(f: Track, g: Track, min_overlap: int):
 
     Returns (lags, ncc, overlap). Lag k means g[0] sits at f[k].
     """
-    n = next_fast_len(len(f) + len(g) - 1, real=True)
+    # power-of-two sizes: few distinct lengths, so the long track's spectra are reused
+    n = 1 << int(np.ceil(np.log2(len(f) + len(g) - 1)))
     Mf, Ff, F2 = f.spec(n)
     Mg, Gg, G2 = g.spec(n)
     c = np.conj

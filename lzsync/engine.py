@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import math
+import time
 from collections import defaultdict
 from dataclasses import dataclass
 from typing import Callable
@@ -188,9 +189,14 @@ def run(clips: list[Clip], opt: Options | None = None, log: Log = print) -> Sync
     if opt.use_audio:
         cache = AudioCache(opt.cache_dir, opt.channels)
         m = Matcher(isl, cache, opt, log)
+        t0 = time.time()
         log("  Audio dekodieren / Hüllkurven …")
         m.build()
+        log(f"    {time.time() - t0:.0f} s")
+        t0 = time.time()
         edges = m.coarse()
+        log(f"    {time.time() - t0:.0f} s")
+        t0 = time.time()
         log(f"  {len(edges)} Audio-Treffer, Feinabgleich …")
         for e in edges:
             pts = m.fine(e)
@@ -201,10 +207,15 @@ def run(clips: list[Clip], opt: Options | None = None, log: Log = print) -> Sync
                 e["fine"] = 0
                 points.append(Point(e["a"], e["lag"], e["b"], 0.0, sigma=0.03, kind="coarse"))
 
+    if opt.use_audio:
+        log(f"    {time.time() - t0:.0f} s")
     linked = {p.a for p in points} | {p.b for p in points}
     cand = [i for i in isl if (i.device == opt.reference if opt.reference else i.id in linked)]
-    # master clock: the longest recording that is part of the audio graph
-    ref_island = max(cand, key=lambda i: (i.length, i.id)).id if cand else None
+    # master clock: audio recorders first (TCXO, far steadier than camera clocks),
+    # then the most recorded audio – not the widest span, which includes pauses
+    audio_s = lambda i: sum(float(c.duration) for c in i.clips)
+    recorder = lambda i: not any(c.has_video for c in i.clips)
+    ref_island = max(cand, key=lambda i: (recorder(i), audio_s(i), i.id)).id if cand else None
 
     offsets, drift, comp, resid = graph.solve(dev_of, points, priors, wall, opt.wall_sigma, ref_island)
     warnings: list[str] = []
