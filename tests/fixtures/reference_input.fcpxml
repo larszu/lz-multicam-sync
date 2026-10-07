@@ -277,8 +277,8 @@
         </asset>
     </resources>
     <library>
-        <event name="FÜR SYNCAILA (Resolve)">
-            <project name="FÜR SYNCAILA (Resolve)">
+        <event name="Multicam (Resolve)">
+            <project name="Multicam (Resolve)">
                 <sequence format="r0" tcFormat="NDF" tcStart="0/1s" duration="295304/25s">
                     <spine>
                         <asset-clip enabled="1" start="820459/25s" offset="0/1s" format="r0" ref="r1" name="A_20261003_5584.MP4" tcFormat="NDF" duration="7344/25s">

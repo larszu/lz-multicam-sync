@@ -58,9 +58,9 @@
 
 ## How it compares
 
-What Syncaila 3 did with the same shoot (90 files, 11 devices) and what LZ Multicam Sync does differently. Details: [docs/syncaila-analyse.md](docs/syncaila-analyse.md).
+What an established commercial sync tool did with a real shoot (90 files, 11 devices) and what LZ Multicam Sync does differently. Details: [docs/referenz-analyse.md](docs/referenz-analyse.md).
 
-| | **LZ Multicam Sync** | Syncaila 3 (observed) |
+| | **LZ Multicam Sync** | Reference tool (observed) |
 | --- | --- | --- |
 | Time model | **Offset + drift per device, solved globally** | offset per clip |
 | Rec-run / free-run timecode | **Detected per camera** | used |
@@ -80,7 +80,7 @@ What Syncaila 3 did with the same shoot (90 files, 11 devices) and what LZ Multi
   0.17 ms, every drift within 0.1 ppm, 2:40 min on an Apple-Silicon Mac.
 - **Real shoot, metadata only** (anonymised fixture in `tests/fixtures`):
   timecode mode of every camera detected, layout inside each free-run camera
-  matches Syncaila within 0.25 s – the rest is clock drift that only the audio
+  matches the reference tool within 0.25 s – the rest is clock drift that only the audio
   pass measures.
 - Open: audio run against the real material of that shoot.
 
@@ -103,7 +103,7 @@ file is the command-line tool.
 ```bash
 lzsync analyze "Shoot.fcpxml" --json sync.json        # FCPXML / .fcpxmld
 lzsync analyze /Volumes/DRIVE/01_FOOTAGE              # or a media folder
-lzsync compare "Shoot - lzsync.fcpxml" "Shoot - Syncaila.fcpxml"
+lzsync compare "Shoot - lzsync.fcpxml" "Shoot - other tool.fcpxml"
 ```
 
 | Option | Effect |

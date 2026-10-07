@@ -19,7 +19,7 @@ Verfahren:
 
 ## Nächste Ausbaustufen
 
-1. Audio-Lauf gegen eines echten Multicam-Drehs und Vergleich mit Syncaila.
+1. Audio-Lauf gegen das echte Material des Referenzdrehs und Vergleich mit dem Referenzergebnis.
 2. Mehrband-Hüllkurve für sehr leises Kameraaudio (synthetisch bei −10 dB SNR noch Fehltreffer-frei, aber ohne Treffer).
 3. Fingerprint-Vorauswahl der Paare für Projekte mit Tausenden Clips.
 4. Sprachanker (Whisper) als dritte, unabhängige Evidenz.

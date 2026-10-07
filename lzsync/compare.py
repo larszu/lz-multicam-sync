@@ -1,4 +1,4 @@
-"""Compare two placements (e.g. lzsync vs. Syncaila) clip by clip."""
+"""Compare two placements (e.g. lzsync vs. another sync tool) clip by clip."""
 from __future__ import annotations
 
 import statistics

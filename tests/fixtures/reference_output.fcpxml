@@ -279,8 +279,8 @@
 		</asset>
 	</resources>
 	<library>
-		<event name="FÜR SYNCAILA (Resolve)">
-			<project name="FÜR SYNCAILA (Resolve) - synced">
+		<event name="Multicam (Resolve)">
+			<project name="Multicam (Resolve) - synced">
 				<sequence audioRate="48k" format="r1">
 					<spine>
 						<gap duration="1178/5s" name="Gap" offset="0s" start="0s">
