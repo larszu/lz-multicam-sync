@@ -87,8 +87,11 @@ def clip_from_file(path: str, root: str, idx: int) -> Clip:
         tc = Fraction(int(tags["time_reference"]), int(a.get("sample_rate", 48000)))
     wall = wallclock_from_name(Path(path).name)
     if wall is None and tags.get("creation_time"):
+        ct = tags["creation_time"]
+        if tags.get("date") and len(ct) == 8 and ct.count(":") == 2:  # BWF: date + local time
+            ct = f"{tags['date']}T{ct}"
         try:
-            wall = datetime.fromisoformat(tags["creation_time"].replace("Z", "+00:00")).timestamp()
+            wall = datetime.fromisoformat(ct.replace("Z", "+00:00")).timestamp()
         except ValueError:
             pass
     rel = Path(path).relative_to(root)
@@ -112,6 +115,20 @@ def scan(folder: str) -> list[Clip]:
         if p.suffix.lower() in MEDIA_EXT and not p.name.startswith("._")
     )
     return [clip_from_file(f, folder, i) for i, f in enumerate(files)]
+
+
+def prefetch(cache: "AudioCache", clips, workers: int | None = None, done=None) -> None:
+    """Decode many files at once – ffmpeg is the bottleneck, one process per core."""
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
+    todo = [c for c in clips if c.has_audio and c.path and os.path.exists(c.path)]
+    workers = workers or min(8, os.cpu_count() or 2)
+    with ThreadPoolExecutor(workers) as ex:
+        futs = [ex.submit(cache.get, c) for c in todo]
+        for k, f in enumerate(as_completed(futs)):
+            f.result()
+            if done:
+                done(k + 1, len(todo))
 
 
 class AudioCache:

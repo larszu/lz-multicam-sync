@@ -21,8 +21,8 @@ class Options:
     split_gap: float = 1800.0  # free-run TC: gap that starts a new island
     session_gap: float = 3600.0  # chronology-only material this far away is kept out of the timeline
     min_overlap: float = 20.0
-    accept_z: float = 9.0
-    accept_prominence: float = 2.0
+    accept_z: float = 10.0
+    accept_prominence: float = 1.5
     fine_window: float = 8.0
     fine_min_sharpness: float = 8.0
     tc_sigma: float = 0.5
@@ -208,6 +208,8 @@ def run(clips: list[Clip], opt: Options | None = None, log: Log = print) -> Sync
         m = Matcher(isl, cache, opt, log)
         t0 = time.time()
         log("  Audio dekodieren / Hüllkurven …")
+        from .media import prefetch
+        prefetch(cache, clips, done=lambda k, n: prog("decode", {"done": k - 1, "total": n}))
         m.build()
         log(f"    {time.time() - t0:.0f} s")
         t0 = time.time()
@@ -270,7 +272,8 @@ def run(clips: list[Clip], opt: Options | None = None, log: Log = print) -> Sync
                                  "kein Audio-Treffer; Clips dieser Kamera untereinander per Timecode")
             elif own:
                 rms = float(np.sqrt(np.mean([r * r for _, r in own])))
-                conf = min(1.0, 0.55 + 0.1 * len(own)) * math.exp(-rms / 0.01)
+                # a few ms are acoustics (mic distance), judge the rest against a frame
+                conf = min(1.0, 0.55 + 0.1 * len(own)) * math.exp(-rms / 0.04)
                 res = ClipResult(c, i.id, start, "audio", conf, f"{len(own)} Messpunkte, Rest {rms * 1000:.1f} ms")
             elif has_audio_link:
                 res = ClipResult(c, i.id, start, "timecode", 0.8, "über Timecode derselben Kamera")
@@ -281,6 +284,7 @@ def run(clips: list[Clip], opt: Options | None = None, log: Log = print) -> Sync
             results.append(res)
         groups[g] = groups.get(g, 0) + len(i.clips)
 
+    _tc_jumps(results, modes, warnings)
     _place_by_neighbours(isl, results, comp, warnings)
     if opt.use_audio:
         _search_short(results, cache, opt, log, drift)
@@ -297,6 +301,29 @@ def run(clips: list[Clip], opt: Options | None = None, log: Log = print) -> Sync
     # positive = device clock runs fast against the reference
     rate = {d: -v for d, v in drift.items()}
     return SyncResult(results, rate, modes, ref_name, edges, warnings)
+
+
+def _tc_jumps(results, modes, warnings, frames: float = 2, fps: float = 25):
+    """Timecode that disagrees with the audio between files of one device.
+
+    Jammed recorders get re-jammed, cameras lose their clock on a battery
+    swap. Audio shows it: start minus timecode should be the same for every
+    file of a free-run device. Differences beyond two frames are reported.
+    """
+    by_dev = defaultdict(lambda: defaultdict(list))
+    for r in results:
+        if r.method == "audio" and r.group == 0 and modes.get(r.clip.device) == "free-run" and r.clip.tc_start is not None:
+            by_dev[r.clip.device][r.island].append(r.start - r.clip.local)
+    for dev, isl in by_dev.items():
+        if len(isl) < 2:
+            continue
+        med = {i: sorted(v)[len(v) // 2] for i, v in isl.items()}
+        ref = max(med, key=lambda i: len(isl[i]))
+        for i, v in med.items():
+            d = v - med[ref]
+            if abs(d) > frames / fps:
+                warnings.append(f"{dev}: Timecode von {i} weicht laut Audio {d:+.2f} s von {ref} ab "
+                                f"(neu gejammt oder Uhr verstellt?)")
 
 
 def _span(i: Island, offsets, drift):
@@ -364,17 +391,35 @@ def _place_by_neighbours(isl, results, comp, warnings):
 
 
 def _session_outliers(results, opt: Options, warnings):
+    """Small islands far away from all audio-synced material are left out.
+
+    A single test clip recorded hours before the shoot does not belong on the
+    timeline. A block of dozens of files from the same camera does – getting
+    ready in the morning has no recorder running, but its timecode is good.
+    """
     synced = [r for r in results if r.method == "audio" and r.group == 0]
     if not synced:
         return
     lo = min(r.start for r in synced)
     hi = max(r.start + float(r.clip.duration) for r in synced)
+    by_island = defaultdict(list)
     for r in results:
-        if r.method in ("chronology", "timecode") and r.group == 0 and r.start is not None:
-            if r.start + float(r.clip.duration) < lo - opt.session_gap or r.start > hi + opt.session_gap:
-                warnings.append(f"{r.clip.name}: liegt laut Timecode {abs(r.start - lo) / 3600:.1f} h außerhalb des Drehs – nicht in die Timeline gelegt")
+        by_island[r.island].append(r)
+    for rs in by_island.values():
+        rs = [r for r in rs if r.method in ("chronology", "timecode") and r.group == 0 and r.start is not None]
+        far = [r for r in rs if r.start + float(r.clip.duration) < lo - opt.session_gap or r.start > hi + opt.session_gap]
+        if not far:
+            continue
+        small = len(rs) < 3 and sum(float(r.clip.duration) for r in rs) < 60
+        for r in far:
+            hours = abs(r.start - lo) / 3600 if r.start < lo else abs(r.start - hi) / 3600
+            if small:
+                warnings.append(f"{r.clip.name}: liegt laut Timecode {hours:.1f} h außerhalb des Drehs – nicht in die Timeline gelegt")
                 r.method, r.start, r.confidence = "unplaced", None, 0.0
                 r.note = "außerhalb der Aufnahmesession (Timecode)"
+            else:
+                r.note = f"{hours:.1f} h vom Audio-Material entfernt, nur per Timecode derselben Kamera"
+                r.confidence = min(r.confidence, 0.5)
 
 
 def _search_short(results, cache: AudioCache, opt: Options, log: Log, drift: dict[str, float]):
@@ -390,7 +435,7 @@ def _search_short(results, cache: AudioCache, opt: Options, log: Log, drift: dic
     for r in results:
         if r.method not in ("chronology", "timecode") or r.group != 0 or r.start is None:
             continue
-        lo, hi = r.window or (r.start - 1.0, r.start + 1.0)
+        lo, hi = r.window or (r.start - 3.0, r.start + 3.0)
         x = cache.get(r.clip)
         if x is None or len(x) < 0.3 * SR:
             continue

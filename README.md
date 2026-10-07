@@ -37,7 +37,8 @@
   up as an outlier and drops out instead of dragging the timeline.
 - **Timecode understood.** Rec-run and free-run are detected per camera, a
   timecode that rolls over midnight is unwrapped, jammed recorders are checked
-  against each other (17 ms off is reported, not hidden).
+  against each other, and a timecode that jumps between files (re-jam, battery
+  swap) is reported from the audio instead of trusted blindly.
 - **Short clips found.** One-second takes that other tools leave as *not synced*
   are searched inside the narrow window their neighbouring files allow, and
   confirmed against a second device.
@@ -78,6 +79,13 @@ What an established commercial sync tool did with a real shoot (90 files, 11 dev
   files, rec-run, drift −40…+25 ppm, midnight rollover, short clips): 75/76
   placed – the missing one is deliberately unrelated audio –, largest error
   0.17 ms, every drift within 0.1 ppm, 2:40 min on an Apple-Silicon Mac.
+- **Real wedding from the archive** (one Panasonic camera with 432 files, a
+  Deity PR4 and two DBTX lavalier recorders, 14 h of timecode across midnight):
+  438/438 files placed in 34 s with cached audio – 114 by their own audio
+  match, 262 by camera timecode between audio anchors, 56 morning files by
+  timecode only. The three recorders agree within 31 ms; the engine reported
+  two timecode jumps the audio revealed (the PR4 1.45 s between files, the
+  camera 2.28 s across a battery swap) instead of silently trusting them.
 - **Real shoot, metadata only** (anonymised fixture in `tests/fixtures`):
   timecode mode of every camera detected, layout inside each free-run camera
   matches the reference tool within 0.25 s – the rest is clock drift that only the audio
@@ -121,7 +129,9 @@ lzsync compare "Shoot - lzsync.fcpxml" "Shoot - other tool.fcpxml"
    free-run camera, or each file of a rec-run camera on its own.
 2. **Coarse match.** Log-energy envelope at 100 Hz with the trend removed;
    masked normalised cross-correlation between islands of different devices –
-   gaps between clips do not count.
+   gaps between clips do not count. Every lag is judged by its own overlap
+   (ncc · √overlap, robustly normalised), so half an hour of weak but real
+   correlation beats twenty seconds of chance.
 3. **Fine match.** GCC-PHAT on the raw audio at up to 40 places of each overlap,
    sub-sample peak, robust line fit.
 4. **Global solve.** `global = offset + t · (1 + ppm)` per device; audio matches
@@ -138,7 +148,7 @@ Background and sources: [docs/forschung.md](docs/forschung.md).
 Requires Python 3.10+ and ffmpeg.
 
 ```bash
-python3.12 -m venv .venv && .venv/bin/pip install -e '.[dev]'
+python3.12 -m venv .venv && .venv/bin/pip install -e '.[dev,gui]'
 .venv/bin/pytest                 # tests
 .venv/bin/lzsync-gui             # window
 sh packaging/build_mac.sh        # app + DMG into dist/

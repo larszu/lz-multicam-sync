@@ -81,24 +81,39 @@ def masked_ncc(f: Track, g: Track, min_overlap: int):
     return lags[order], ncc[order], O[order]
 
 
+def significance(ncc, overlap):
+    """NCC weighted by its own overlap, normalised to the noise of this pair.
+
+    The spread of a correlation coefficient shrinks with the square root of the
+    number of samples behind it. Judging every lag against one common noise
+    level lets a few seconds of chance overlap beat half an hour of real
+    overlap; ncc·√overlap, divided by its robust spread over all lags, does not.
+    """
+    s = ncc * np.sqrt(np.maximum(overlap, 0))
+    valid = overlap > 0
+    base = s[valid]
+    if base.size < 10:
+        return s
+    mad = np.median(np.abs(base - np.median(base)))
+    # floor: with only a few seconds of audio the spread estimate collapses
+    return s / max(1.4826 * mad, 1.0)
+
+
 def peaks(lags, ncc, overlap, exclude: int, k: int = 3):
     """Top-k peaks with prominence over the rest of the correlation function."""
+    z = significance(ncc, overlap)
     out = []
-    work = ncc.copy()
-    valid = overlap > 0
-    base = ncc[valid]
-    noise = float(np.std(base)) if base.size > 10 else 1.0
+    work = z.copy()
     for _ in range(k):
         i = int(np.argmax(work))
         if work[i] <= 0:
             break
-        out.append(dict(lag=int(lags[i]), ncc=float(ncc[i]), overlap=int(overlap[i])))
+        out.append(dict(lag=int(lags[i]), ncc=float(ncc[i]), overlap=int(overlap[i]), z=float(z[i])))
         lo, hi = np.searchsorted(lags, [lags[i] - exclude, lags[i] + exclude])
-        work[lo:hi] = -1
+        work[lo:hi] = -np.inf
     for j, p in enumerate(out):
-        nxt = out[j + 1]["ncc"] if j + 1 < len(out) else 0.0
-        p["prominence"] = (p["ncc"] - max(nxt, 0.0)) / max(noise, 1e-6)
-        p["z"] = p["ncc"] / max(noise, 1e-6)
+        nxt = out[j + 1]["z"] if j + 1 < len(out) else 0.0
+        p["prominence"] = p["z"] - max(nxt, 0.0)
     return out
 
 
