@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "lzsync"
-version = "0.1.0"
+version = "0.1.1"
 description = "Multicam-/Audio-Sync-Engine für die Postproduktion (FCPXML rein, FCPXML raus)"
 requires-python = ">=3.10"
 dependencies = ["numpy>=1.26", "scipy>=1.11"]

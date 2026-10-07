@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import math
 import xml.etree.ElementTree as ET
+import zipfile
 from collections import Counter, defaultdict
 from fractions import Fraction
 from pathlib import Path, PurePosixPath
@@ -37,8 +38,31 @@ def device_of(path: str, levels: int = 1) -> str:
     return "/".join(parts[-levels:]) if parts else "?"
 
 
+def parse(path: str) -> ET.Element:
+    """FCPXML file, .fcpxmld bundle folder, or a zipped .fcpxmld (as browsers/AirDrop deliver it)."""
+    p = Path(path)
+    if p.is_dir():
+        inner = p / "Info.fcpxml"
+        if not inner.exists():
+            inner = next(p.rglob("*.fcpxml"), None)
+            if inner is None:
+                raise ValueError(f"{p.name}: keine .fcpxml im Bundle gefunden")
+        return ET.parse(inner).getroot()
+    if zipfile.is_zipfile(p):
+        with zipfile.ZipFile(p) as z:
+            names = [n for n in z.namelist() if n.endswith(".fcpxml") and not n.split("/")[-1].startswith("._")]
+            if not names:
+                raise ValueError(f"{p.name}: ZIP enthält keine .fcpxml")
+            name = next((n for n in names if n.endswith("Info.fcpxml")), names[0])
+            return ET.fromstring(z.read(name))
+    try:
+        return ET.parse(p).getroot()
+    except ET.ParseError as e:
+        raise ValueError(f"{p.name}: keine lesbare FCPXML ({e})") from None
+
+
 def read(path: str) -> tuple[list[Clip], dict]:
-    root = ET.parse(path).getroot()
+    root = parse(path)
     formats = {f.get("id"): f for f in root.iter("format")}
     used = {e.get("ref") for e in root.iter("asset-clip")} | {e.get("ref") for e in root.iter("clip")}
     clips: list[Clip] = []
@@ -88,7 +112,7 @@ def _name(root, tag: str) -> str:
 
 def placements(path: str) -> dict[str, float]:
     """Global timeline position of each asset's media start, keyed by clip name."""
-    root = ET.parse(path).getroot()
+    root = parse(path)
     assets = {a.get("id"): a for a in root.iter("asset")}
     out: dict[str, float] = {}
 

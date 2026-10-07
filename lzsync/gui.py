@@ -44,15 +44,20 @@ class App(tk.Tk):
         ttk.Entry(f, textvariable=self.jam).grid(row=2, column=1, sticky="ew", padx=6, pady=(8, 0))
         ttk.Label(f, text="Geräte mit gemeinsamem TC, Komma").grid(row=2, column=2, sticky="w", pady=(8, 0))
 
+        ttk.Label(f, text="Pfad ersetzen").grid(row=3, column=0, sticky="w", pady=(8, 0))
+        self.remap = tk.StringVar()
+        ttk.Entry(f, textvariable=self.remap).grid(row=3, column=1, sticky="ew", padx=6, pady=(8, 0))
+        ttk.Label(f, text="ALT=NEU, wenn das Laufwerk anders heißt").grid(row=3, column=2, sticky="w", pady=(8, 0))
+
         opts = ttk.Frame(f)
-        opts.grid(row=3, column=1, sticky="w", padx=6, pady=(8, 0))
+        opts.grid(row=4, column=1, sticky="w", padx=6, pady=(8, 0))
         self.first = tk.BooleanVar()
         self.noaudio = tk.BooleanVar()
         ttk.Checkbutton(opts, text="nur erster Audiokanal", variable=self.first).pack(side="left")
         ttk.Checkbutton(opts, text="ohne Audio (nur Timecode)", variable=self.noaudio).pack(side="left", padx=12)
 
         act = ttk.Frame(f)
-        act.grid(row=4, column=0, columnspan=3, sticky="ew", pady=10)
+        act.grid(row=5, column=0, columnspan=3, sticky="ew", pady=10)
         self.go = ttk.Button(act, text="Synchronisieren", command=self.start)
         self.go.pack(side="left")
         self.show = ttk.Button(act, text="Ergebnis im Finder zeigen", command=self.reveal, state="disabled")
@@ -61,8 +66,8 @@ class App(tk.Tk):
         self.bar.pack(side="right")
 
         self.log = tk.Text(f, wrap="none", font=("Menlo" if sys.platform == "darwin" else "Consolas", 11))
-        self.log.grid(row=5, column=0, columnspan=3, sticky="nsew")
-        f.rowconfigure(5, weight=1)
+        self.log.grid(row=6, column=0, columnspan=3, sticky="nsew")
+        f.rowconfigure(6, weight=1)
         self.after(100, self.pump)
 
     def pick_file(self):
@@ -108,6 +113,7 @@ class App(tk.Tk):
             text, out = analyze(src, no_audio=self.noaudio.get(), reference=self.ref.get().strip(),
                                 channels="first" if self.first.get() else "mix",
                                 jammed=[x.strip() for x in self.jam.get().split(",") if x.strip()],
+                                remap=[self.remap.get().strip()] if "=" in self.remap.get() else [],
                                 log=self.write)
             self.write("\n" + text + f"\n\n→ {out}")
             self.q.put(("done", out))

@@ -62,3 +62,19 @@ def test_writer_roundtrip(tmp_path):
     for r in main:
         tol = 0.021 if r.clip.has_video else 1 / 48000
         assert abs(got[r.clip.name] - (r.start - t0)) <= tol, r.clip.name
+
+
+def test_reads_zipped_and_folder_bundle(tmp_path):
+    import shutil
+    import zipfile
+
+    src = FX / "syncaila_input.fcpxml"
+    bundle = tmp_path / "Demo.fcpxmld"
+    bundle.mkdir()
+    shutil.copy(src, bundle / "Info.fcpxml")
+    z = tmp_path / "zipped.fcpxmld"  # what a download/AirDrop turns the bundle into
+    with zipfile.ZipFile(z, "w") as zf:
+        zf.write(bundle / "Info.fcpxml", "Demo.fcpxmld/Info.fcpxml")
+    for p in (bundle, z):
+        clips, _ = fcpxml_io.read(str(p))
+        assert len(clips) == 90
