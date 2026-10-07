@@ -31,6 +31,7 @@ class Options:
     cache_dir: str | None = None
     reference: str | None = None  # device name used as master clock
     jammed: tuple[str, ...] = ()  # devices whose free-run TC was jammed to one source
+    progress: Callable[[str, dict], None] | None = None  # live data for the timeline view
 
 
 Log = Callable[[str], None]
@@ -79,7 +80,9 @@ class Matcher:
 
     def build(self):
         H = dsp.FEAT_HZ
-        for i in self.isl:
+        prog = self.opt.progress or (lambda *_: None)
+        for k, i in enumerate(self.isl):
+            prog("decode", {"done": k, "total": len(self.isl), "island": i.id})
             n = int(math.ceil(i.length * H)) + 1
             v, m = np.zeros(n, np.float32), np.zeros(n, bool)
             for c in i.clips:
@@ -102,8 +105,12 @@ class Matcher:
         edges = []
         pairs = [(a, b) for k, a in enumerate(ids) for b in ids[k + 1 :] if dev[a] != dev[b]]
         self.log(f"  Grobabgleich: {len(pairs)} Paare")
+        prog = self.opt.progress or (lambda *_: None)
+        step = max(1, len(pairs) // 100)
         with sfft.set_workers(-1):
-            for a, b in pairs:
+            for k, (a, b) in enumerate(pairs):
+                if k % step == 0:
+                    prog("pairs", {"done": k, "total": len(pairs)})
                 shorter = min(self.audio_len[a], self.audio_len[b])
                 mo = int(H * max(2.0, min(self.opt.min_overlap, 0.6 * shorter)))
                 lags, ncc, ov = dsp.masked_ncc(self.tracks[a], self.tracks[b], mo)
@@ -116,6 +123,8 @@ class Matcher:
                 if p["z"] >= need and p["prominence"] >= self.opt.accept_prominence:
                     edges.append(dict(a=a, b=b, lag=p["lag"] / H, z=p["z"], prom=p["prominence"],
                                       ncc=p["ncc"], overlap=p["overlap"] / H))
+                    prog("edge", {"a": a, "b": b, "lag": p["lag"] / H, "z": round(p["z"], 1)})
+            prog("pairs", {"done": len(pairs), "total": len(pairs)})
         return edges
 
     def fine(self, e) -> list[Point]:
@@ -183,6 +192,14 @@ def run(clips: list[Clip], opt: Options | None = None, log: Log = print) -> Sync
         n = sum(1 for i in isl if i.device == d)
         log(f"  {d}: TC {m}, {n} Insel(n)")
     priors, wall = _priors(isl, modes, opt)
+    prog = opt.progress or (lambda *_: None)
+    index = {id(c): k for k, c in enumerate(clips)}
+    prog("layout", {
+        "clips": [dict(k=index[id(c)], dev=c.device, name=c.name, dur=float(c.duration), island=i.id,
+                       rel=i.rel(c), video=c.has_video) for i in isl for c in i.clips],
+        "islands": [dict(id=i.id, dev=i.device, length=i.length) for i in isl],
+        "modes": modes,
+    })
 
     points: list[Point] = []
     edges: list[dict] = []
@@ -198,7 +215,8 @@ def run(clips: list[Clip], opt: Options | None = None, log: Log = print) -> Sync
         log(f"    {time.time() - t0:.0f} s")
         t0 = time.time()
         log(f"  {len(edges)} Audio-Treffer, Feinabgleich …")
-        for e in edges:
+        for n_e, e in enumerate(edges):
+            prog("fine", {"done": n_e, "total": len(edges)})
             pts = m.fine(e)
             if pts:
                 e["fine"] = len(pts)
@@ -274,6 +292,8 @@ def run(clips: list[Clip], opt: Options | None = None, log: Log = print) -> Sync
     for r in results:
         if r.group != main and r.method != "unplaced":
             r.note = (r.note + f"; Gruppe {r.group}: nur untereinander synchron").strip("; ")
+    prog("final", {"clips": [dict(k=index[id(r.clip)], start=r.start, method=r.method, group=r.group)
+                             for r in results], "reference": ref_name})
     # positive = device clock runs fast against the reference
     rate = {d: -v for d, v in drift.items()}
     return SyncResult(results, rate, modes, ref_name, edges, warnings)

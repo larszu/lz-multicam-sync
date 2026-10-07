@@ -6,7 +6,8 @@ VER=$($PY -c "import lzsync; print(lzsync.__version__)")
 rm -rf build dist
 $PY -m PyInstaller --noconfirm --windowed --name "LZ Multicam Sync" \
   --osx-bundle-identifier de.zumpelars.lzsync \
-  --collect-submodules lzsync packaging/entry.py
+  --add-data "lzsync/ui:lzsync/ui" --collect-submodules lzsync --collect-submodules webview \
+  packaging/entry.py
 mkdir -p dist/dmg
 cp -R "dist/LZ Multicam Sync.app" dist/dmg/
 ln -s /Applications dist/dmg/Programme

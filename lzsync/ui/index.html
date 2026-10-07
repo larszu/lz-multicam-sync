@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="de" data-density="regular">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LZ Multicam Sync</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <img class="signet on-dark" src="assets/lzm_signet_offwhite_tally.svg" alt="">
+    <img class="signet on-light" src="assets/lzm_signet_navy_tally.svg" alt="">
+    <span class="product">LZ Multicam Sync</span>
+    <span class="version" id="version"></span>
+  </div>
+  <div class="seg" role="radiogroup" aria-label="Darstellung">
+    <button type="button" role="radio" data-theme-choice="system">System</button>
+    <button type="button" role="radio" data-theme-choice="dark">Dunkel</button>
+    <button type="button" role="radio" data-theme-choice="light">Hell</button>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="panel">
+    <section>
+      <h2 class="head">Quelle</h2>
+      <div class="drop" id="drop" tabindex="0" aria-describedby="drop-hint">
+        <div class="drop-path" id="source-label">Keine Quelle gewählt</div>
+        <div class="drop-hint" id="drop-hint">FCPXML, .fcpxmld oder Medienordner hierher ziehen</div>
+      </div>
+      <div class="row">
+        <button type="button" class="btn secondary" id="pick-file">FCPXML wählen</button>
+        <button type="button" class="btn secondary" id="pick-folder">Ordner wählen</button>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="head">Optionen</h2>
+      <label class="field">
+        <span>Referenzgerät</span>
+        <input id="reference" placeholder="automatisch (Audiorecorder zuerst)" autocomplete="off" spellcheck="false">
+      </label>
+      <label class="field">
+        <span>Gemeinsam gejammter Timecode</span>
+        <input id="jammed" placeholder="z. B. TENTACLE_1, TENTACLE_2" autocomplete="off" spellcheck="false">
+      </label>
+      <label class="field">
+        <span>Pfad ersetzen</span>
+        <input id="remap" placeholder="/Volumes/ALT=/Volumes/NEU" autocomplete="off" spellcheck="false">
+        <small>wenn das Laufwerk inzwischen anders heißt</small>
+      </label>
+      <label class="check"><input type="checkbox" id="first-channel"><span>Nur ersten Audiokanal verwenden</span></label>
+      <label class="check"><input type="checkbox" id="no-audio"><span>Ohne Audio, nur Timecode</span></label>
+    </section>
+
+    <div class="panel-foot">
+      <button type="button" class="btn primary block" id="run" disabled>Synchronisieren</button>
+    </div>
+  </aside>
+
+  <main class="content" id="content">
+    <section class="tl-block" id="tl-block" hidden>
+      <div class="tl-head">
+        <h2 class="head">Timeline</h2>
+        <span class="tl-stage" id="tl-stage" aria-live="polite"></span>
+      </div>
+      <canvas id="timeline" role="img" aria-label="Timeline der Clips je Gerät"></canvas>
+      <div class="progress" aria-hidden="true"><span id="prog-bar"></span></div>
+      <ul class="legend">
+        <li><i class="sw audio"></i>Audio synchron</li>
+        <li><i class="sw matched"></i>vorläufig / Timecode</li>
+        <li><i class="sw chrono"></i>Chronologie</li>
+        <li><i class="sw pending"></i>noch ohne Treffer</li>
+      </ul>
+    </section>
+    <section class="empty" id="view-empty">
+      <p class="kicker">Multicam Sync</p>
+      <h1>Kameras und Recorder auf eine Timeline.</h1>
+      <p>Audio, Timecode und Dateireihenfolge zusammen – mit Uhrmodell je Gerät, sub-frame-genau, jede Entscheidung begründet.</p>
+      <button type="button" class="btn secondary" id="empty-pick">FCPXML wählen</button>
+    </section>
+
+    <section class="running" id="view-running" hidden>
+      <ol class="log" id="live-log" aria-live="polite"></ol>
+    </section>
+
+    <section class="result" id="view-result" hidden>
+      <div class="notice warn" id="missing" hidden>
+        <span class="sign" aria-hidden="true"></span>
+        <div><b id="missing-title"></b><br><span id="missing-text"></span></div>
+      </div>
+      <div class="notice error" id="error" hidden>
+        <span class="sign" aria-hidden="true"></span>
+        <div><b>Abgebrochen</b><br><span id="error-text"></span></div>
+      </div>
+
+      <div class="stats" id="stats">
+        <div><span class="kicker">In der Timeline</span><strong id="stat-placed"></strong></div>
+        <div><span class="kicker">Referenzuhr</span><strong id="stat-ref"></strong></div>
+        <div><span class="kicker">Zu prüfen</span><strong id="stat-review"></strong></div>
+      </div>
+
+      <div class="output" id="output-row">
+        <span class="kicker">Ergebnis</span>
+        <code id="output-path"></code>
+        <button type="button" class="btn ghost" id="reveal">Im Finder zeigen</button>
+      </div>
+
+      <h2 class="head">Geräte</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Gerät</th><th>Timecode</th><th class="num">Gang</th><th class="num">TC-Versatz</th>
+            <th class="num">Clips</th><th class="num">Audio</th><th class="num">TC</th><th class="num">Chrono</th><th class="num">offen</th>
+          </tr></thead>
+          <tbody id="devices"></tbody>
+        </table>
+      </div>
+
+      <div id="review-block">
+        <h2 class="head">Bitte prüfen</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Datei</th><th>Methode</th><th class="num">Konfidenz</th><th>Hinweis</th></tr></thead>
+            <tbody id="review"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="warn-block">
+        <h2 class="head">Hinweise</h2>
+        <ul class="warnings" id="warnings"></ul>
+      </div>
+
+      <details class="log-details">
+        <summary>Protokoll</summary>
+        <ol class="log" id="final-log"></ol>
+      </details>
+    </section>
+  </main>
+</div>
+<script src="timeline.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

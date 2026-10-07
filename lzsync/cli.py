@@ -21,8 +21,9 @@ def _remap(clips, pairs):
 
 
 def analyze(inp: str, output: str | None = None, *, no_audio=False, reference=None, cache=None,
-            channels="mix", split_gap=1800.0, jammed=(), remap=(), json_path=None, log=print):
-    """Shared by CLI and GUI. Returns (summary text, output path)."""
+            channels="mix", split_gap=1800.0, jammed=(), remap=(), json_path=None, log=print,
+            with_result=False, progress=None):
+    """Shared by CLI and GUI. Returns (summary text, output path[, result, missing])."""
     if os.path.isdir(inp) and not inp.rstrip("/").endswith(".fcpxmld"):
         clips, meta = media.scan(inp), {"formats": {}, "event": os.path.basename(inp.rstrip("/"))}
     else:
@@ -32,7 +33,8 @@ def analyze(inp: str, output: str | None = None, *, no_audio=False, reference=No
     if missing and not no_audio:
         log(f"  {len(missing)}/{len(clips)} Mediendateien nicht gefunden (z. B. {missing[0].path})")
     opt = engine.Options(use_audio=not no_audio, reference=reference or None, cache_dir=cache,
-                         channels=channels, split_gap=split_gap, jammed=tuple(jammed))
+                         channels=channels, split_gap=split_gap, jammed=tuple(jammed),
+                         progress=progress)
     log(f"{len(clips)} Clips, {len({c.device for c in clips})} Geräte")
     res = engine.run(clips, opt, log)
     stem = os.path.splitext(inp.rstrip("/"))[0]
@@ -46,6 +48,8 @@ def analyze(inp: str, output: str | None = None, *, no_audio=False, reference=No
                 f"z. B. {missing[0].path}\nOhne Medien kein Audio-Abgleich – Laufwerk anschließen "
                 "(oder Pfad mit --remap ALT=NEU umbiegen) und erneut starten.\n\n")
         text = hint + text
+    if with_result:
+        return text, out, res, (0 if no_audio else len(missing))
     return text, out
 
 

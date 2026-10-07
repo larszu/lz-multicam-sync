@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "lzsync"
-version = "0.1.2"
+version = "0.2.0"
 description = "Multicam-/Audio-Sync-Engine für die Postproduktion (FCPXML rein, FCPXML raus)"
 requires-python = ">=3.10"
-dependencies = ["numpy>=1.26", "scipy>=1.11"]
+dependencies = ["numpy>=1.26", "scipy>=1.11", "pywebview>=5"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
@@ -20,6 +20,9 @@ lzsync-gui = "lzsync.gui:main"
 
 [tool.setuptools]
 packages = ["lzsync"]
+
+[tool.setuptools.package-data]
+lzsync = ["ui/*", "ui/assets/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
