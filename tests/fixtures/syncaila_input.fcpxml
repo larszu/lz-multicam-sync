@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fcpxml>
+<fcpxml version="1.10">
+    <resources>
+        <format id="r0" width="3840" name="FFVideoFormat3840x2160p25" frameDuration="1/25s" height="2160"/>
+        <format id="r15" width="2160" name="FFVideoFormatRateUndefined" frameDuration="1/25s" height="3840"/>
+        <format id="r85" width="3840" name="FFVideoFormat3840x2160p2997" frameDuration="1001/30000s" height="2160"/>
+        <asset audioSources="1" audioChannels="2" id="r1" start="820459/25s" format="r0" hasVideo="1" hasAudio="1" name="A_20261003_5584.MP4" duration="7344/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_A/A_20261003_5584.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r2" start="827803/25s" format="r0" hasVideo="1" hasAudio="1" name="A_20261003_5585.MP4" duration="3168/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_A/A_20261003_5585.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r3" start="830971/25s" format="r0" hasVideo="1" hasAudio="1" name="A_20261003_5586.MP4" duration="2772/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_A/A_20261003_5586.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r4" start="833743/25s" format="r0" hasVideo="1" hasAudio="1" name="A_20261003_5587.MP4" duration="408/5s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_A/A_20261003_5587.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r5" start="835783/25s" format="r0" hasVideo="1" hasAudio="1" name="A_20261003_5588.MP4" duration="108/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_A/A_20261003_5588.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r6" start="835891/25s" format="r0" hasVideo="1" hasAudio="1" name="A_20261003_5589.MP4" duration="312/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_A/A_20261003_5589.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r7" start="836203/25s" format="r0" hasVideo="1" hasAudio="1" name="A_20261003_5590.MP4" duration="1548/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_A/A_20261003_5590.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r8" start="837751/25s" format="r0" hasVideo="1" hasAudio="1" name="A_20261003_5591.MP4" duration="528/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_A/A_20261003_5591.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r9" start="838279/25s" format="r0" hasVideo="1" hasAudio="1" name="A_20261003_5592.MP4" duration="252/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_A/A_20261003_5592.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r10" start="838603/25s" format="r0" hasVideo="1" hasAudio="1" name="A_20261003_5594.MP4" duration="468/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_A/A_20261003_5594.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r11" start="839071/25s" format="r0" hasVideo="1" hasAudio="1" name="A_20261003_5595.MP4" duration="3552/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_A/A_20261003_5595.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r12" start="842623/25s" format="r0" hasVideo="1" hasAudio="1" name="A_20261003_5596.MP4" duration="144/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_A/A_20261003_5596.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r13" start="842767/25s" format="r0" hasVideo="1" hasAudio="1" name="A_20261003_5597.MP4" duration="696/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_A/A_20261003_5597.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r14" start="843463/25s" format="r0" hasVideo="1" hasAudio="1" name="A_20261003_5598.MP4" duration="96/5s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_A/A_20261003_5598.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r16" start="843943/25s" format="r15" hasVideo="1" hasAudio="1" name="A_20261003_5599.MP4" duration="132/5s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_A/A_20261003_5599.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r17" start="844603/25s" format="r15" hasVideo="1" hasAudio="1" name="A_20261003_5600.MP4" duration="204/5s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_A/A_20261003_5600.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r18" start="970871/25s" format="r0" hasVideo="1" hasAudio="1" name="E20261003_9381_2.MP4" duration="170712/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_E/E20261003_9381_2.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r19" start="1146843/25s" format="r0" hasVideo="1" hasAudio="1" name="E20261003_9381.MP4" duration="118428/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_E/E20261003_9381.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r20" start="298032/5s" format="r0" hasVideo="1" hasAudio="1" name="C1540.MP4" duration="5184/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1540.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r21" start="1495344/25s" format="r0" hasVideo="1" hasAudio="1" name="C1541.MP4" duration="18072/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1541.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r22" start="1513416/25s" format="r0" hasVideo="1" hasAudio="1" name="C1542.MP4" duration="28992/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1542.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r23" start="1542408/25s" format="r0" hasVideo="1" hasAudio="1" name="C1543.MP4" duration="15516/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1543.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r24" start="1557924/25s" format="r0" hasVideo="1" hasAudio="1" name="C1544.MP4" duration="372/1s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1544.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r25" start="1567224/25s" format="r0" hasVideo="1" hasAudio="1" name="C1545.MP4" duration="3948/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1545.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r26" start="1571172/25s" format="r0" hasVideo="1" hasAudio="1" name="C1546.MP4" duration="576/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1546.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r27" start="1571748/25s" format="r0" hasVideo="1" hasAudio="1" name="C1547.MP4" duration="18108/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1547.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r28" start="1589856/25s" format="r0" hasVideo="1" hasAudio="1" name="C1548.MP4" duration="3936/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1548.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r29" start="1593792/25s" format="r0" hasVideo="1" hasAudio="1" name="C1549.MP4" duration="17064/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1549.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r30" start="1610856/25s" format="r15" hasVideo="1" hasAudio="1" name="C1550.MP4" duration="3132/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1550.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r31" start="1613988/25s" format="r0" hasVideo="1" hasAudio="1" name="C1551.MP4" duration="8472/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1551.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r32" start="324492/5s" format="r15" hasVideo="1" hasAudio="1" name="C1552.MP4" duration="2652/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1552.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r33" start="1625112/25s" format="r15" hasVideo="1" hasAudio="1" name="C1553.MP4" duration="2664/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1553.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r34" start="1627776/25s" format="r0" hasVideo="1" hasAudio="1" name="C1554.MP4" duration="6384/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1554.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r35" start="326832/5s" format="r0" hasVideo="1" hasAudio="1" name="C1555.MP4" duration="2976/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1555.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r36" start="1637136/25s" format="r0" hasVideo="1" hasAudio="1" name="C1556.MP4" duration="11148/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1556.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r37" start="1648284/25s" format="r0" hasVideo="1" hasAudio="1" name="C1557.MP4" duration="2472/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1557.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r38" start="1650756/25s" format="r0" hasVideo="1" hasAudio="1" name="C1558.MP4" duration="7176/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1558.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r39" start="1657932/25s" format="r0" hasVideo="1" hasAudio="1" name="C1559.MP4" duration="516/1s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_B/C1559.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r40" start="971922/25s" format="r0" hasVideo="1" hasAudio="1" name="C1442.MP4" duration="216/5s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1442.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r41" start="973156/25s" format="r0" hasVideo="1" hasAudio="1" name="C1443.MP4" duration="132/5s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1443.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r42" start="194774/5s" format="r0" hasVideo="1" hasAudio="1" name="C1444.MP4" duration="3252/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1444.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r43" start="978402/25s" format="r0" hasVideo="1" hasAudio="1" name="C1445.MP4" duration="1656/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1445.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r44" start="39581/1s" format="r0" hasVideo="1" hasAudio="1" name="C1446.MP4" duration="9768/5s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1446.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r45" start="1042612/25s" format="r0" hasVideo="1" hasAudio="1" name="C1447.MP4" duration="10992/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1447.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r46" start="1053917/25s" format="r0" hasVideo="1" hasAudio="1" name="C1448.MP4" duration="21468/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1448.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r47" start="1076861/25s" format="r0" hasVideo="1" hasAudio="1" name="C1449.MP4" duration="15504/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1449.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r48" start="1093179/25s" format="r0" hasVideo="1" hasAudio="1" name="C1450.MP4" duration="29964/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1450.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r49" start="1124519/25s" format="r0" hasVideo="1" hasAudio="1" name="C1451.MP4" duration="4176/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1451.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r50" start="1129447/25s" format="r0" hasVideo="1" hasAudio="1" name="C1452.MP4" duration="3168/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1452.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r51" start="1134967/25s" format="r0" hasVideo="1" hasAudio="1" name="C1453.MP4" duration="5076/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1453.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r52" start="228322/5s" format="r0" hasVideo="1" hasAudio="1" name="C1454.MP4" duration="6912/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1454.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r53" start="1170548/25s" format="r0" hasVideo="1" hasAudio="1" name="C1455.MP4" duration="9876/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1455.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r54" start="1182864/25s" format="r0" hasVideo="1" hasAudio="1" name="C1456.MP4" duration="14124/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1456.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r55" start="1198551/25s" format="r0" hasVideo="1" hasAudio="1" name="C1457.MP4" duration="7428/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1457.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r56" start="1206709/25s" format="r0" hasVideo="1" hasAudio="1" name="C1458.MP4" duration="1416/5s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1458.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r57" start="1215824/25s" format="r0" hasVideo="1" hasAudio="1" name="C1459.MP4" duration="11556/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1459.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r58" start="1227594/25s" format="r0" hasVideo="1" hasAudio="1" name="C1460.MP4" duration="13212/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_C/C1460.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r59" start="1953959/25s" format="r0" hasVideo="1" hasAudio="1" name="D0001.MP4" duration="24/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_D/D0001.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r60" start="2031053/25s" format="r0" hasVideo="1" hasAudio="1" name="D0002.MP4" duration="24/5s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_D/D0002.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r61" start="2067136/25s" format="r0" hasVideo="1" hasAudio="1" name="D0003.MP4" duration="48816/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_D/D0003.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r62" start="2120012/25s" format="r0" hasVideo="1" hasAudio="1" name="D0004.MP4" duration="7752/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_D/D0004.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r63" start="2130799/25s" format="r0" hasVideo="1" hasAudio="1" name="D0005.MP4" duration="2652/5s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_D/D0005.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r64" start="2144123/25s" format="r0" hasVideo="1" hasAudio="1" name="D0006.MP4" duration="1644/5s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_D/D0006.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r65" start="2156366/25s" format="r0" hasVideo="1" hasAudio="1" name="D0007.MP4" duration="8412/5s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_D/D0007.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r66" start="8081/5s" format="r0" hasVideo="1" hasAudio="1" name="D0008.MP4" duration="26496/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_D/D0008.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r67" start="17728/5s" format="r0" hasVideo="1" hasAudio="1" name="D0009.MP4" duration="25296/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_D/D0009.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r68" start="23353/5s" format="r0" hasVideo="1" hasAudio="1" name="D0010.MP4" duration="15456/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_D/D0010.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r69" start="133136/25s" format="r0" hasVideo="1" hasAudio="1" name="D0011.MP4" duration="9876/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_D/D0011.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r70" start="29151/5s" format="r0" hasVideo="1" hasAudio="1" name="D0012.MP4" duration="6732/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_D/D0012.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r71" start="152714/25s" format="r0" hasVideo="1" hasAudio="1" name="D0013.MP4" duration="2856/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_D/D0013.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r72" start="156751/25s" format="r0" hasVideo="1" hasAudio="1" name="D0014.MP4" duration="60/1s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_D/D0014.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r73" start="167524/25s" format="r0" hasVideo="1" hasAudio="1" name="D0015.MP4" duration="384/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_D/D0015.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r74" start="167941/25s" format="r0" hasVideo="1" hasAudio="1" name="D0016.MP4" duration="2076/5s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/FX3_D/D0016.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r75" start="1486668/25s" format="r0" hasVideo="1" hasAudio="1" name="C3522.MP4" duration="141444/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/A7IV_FIXED/C3522.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r76" start="1628112/25s" format="r0" hasVideo="1" hasAudio="1" name="C3523.MP4" duration="29676/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/A7IV_FIXED/C3523.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r77" start="1657788/25s" format="r0" hasVideo="1" hasAudio="1" name="C3524.MP4" duration="12/5s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/A7IV_FIXED/C3524.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r78" start="1657848/25s" format="r0" hasVideo="1" hasAudio="1" name="C3525.MP4" duration="92124/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/A7IV_FIXED/C3525.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r79" start="1552863/25s" format="r0" hasVideo="1" hasAudio="1" name="DJI_20260101031929_0001_D.MP4" duration="1/5s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/INSTA_01/DJI_20260101031929_0001_D.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r80" start="1554051/25s" format="r0" hasVideo="1" hasAudio="1" name="DJI_20260101032017_0002_D.MP4" duration="48077/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/INSTA_01/DJI_20260101032017_0002_D.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r81" start="1602127/25s" format="r0" hasVideo="1" hasAudio="1" name="DJI_20260101035221_0003_D.MP4" duration="48512/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/INSTA_01/DJI_20260101035221_0003_D.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r82" start="1650639/25s" format="r0" hasVideo="1" hasAudio="1" name="DJI_20260101042442_0004_D.MP4" duration="38/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/INSTA_01/DJI_20260101042442_0004_D.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r83" start="1669982/25s" format="r0" hasVideo="1" hasAudio="1" name="DJI_20260101043734_0006_D.MP4" duration="48278/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/INSTA_01/DJI_20260101043734_0006_D.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r84" start="1718259/25s" format="r0" hasVideo="1" hasAudio="1" name="DJI_20260101050946_0007_D.MP4" duration="34517/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/INSTA_01/DJI_20260101050946_0007_D.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r86" start="48701653/10000s" format="r85" hasVideo="1" hasAudio="1" name="DJI_20261002171532_0033_D.MP4" duration="7007/5000s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/INSTA_02/DJI_20261002171532_0033_D.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r87" start="401949/25s" format="r0" hasVideo="1" hasAudio="1" name="DJI_20261002202220_0034_D.MP4" duration="49177/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/INSTA_02/DJI_20261002202220_0034_D.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r88" start="18045/1s" format="r0" hasVideo="1" hasAudio="1" name="DJI_20261002205509_0035_D.MP4" duration="48093/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/INSTA_02/DJI_20261002205509_0035_D.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="2" id="r89" start="499218/25s" format="r0" hasVideo="1" hasAudio="1" name="DJI_20261002212712_0036_D.MP4" duration="31197/25s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/01_CAMS/INSTA_02/DJI_20261002212712_0036_D.MP4" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="1" id="r90" start="116286541/3000s" hasAudio="1" name="T1_0001A.wav" duration="4429568/375s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/02_AUDIO/TENTACLE_1/T1_0001A.wav" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="1" id="r91" start="77442552427/1998000s" hasAudio="1" name="T2_0001A.wav" duration="166144/15s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/02_AUDIO/TENTACLE_2/T2_0001A.wav" kind="original-media"/>
+        </asset>
+        <asset audioSources="1" audioChannels="1" id="r92" start="77445953897/1998000s" hasAudio="1" name="T3_0002A.wav" duration="1383936/125s">
+            <media-rep src="file:///Volumes/MEDIA/DEMO/01_FOOTAGE/02_AUDIO/TENTACLE_3/T3_0002A.wav" kind="original-media"/>
+        </asset>
+    </resources>
+    <library>
+        <event name="FÜR SYNCAILA (Resolve)">
+            <project name="FÜR SYNCAILA (Resolve)">
+                <sequence format="r0" tcFormat="NDF" tcStart="0/1s" duration="295304/25s">
+                    <spine>
+                        <asset-clip enabled="1" start="820459/25s" offset="0/1s" format="r0" ref="r1" name="A_20261003_5584.MP4" tcFormat="NDF" duration="7344/25s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            <asset-clip enabled="1" start="970871/25s" offset="820459/25s" format="r0" ref="r18" lane="1" name="E20261003_9381_2.MP4" tcFormat="NDF" duration="170712/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="298032/5s" offset="820459/25s" format="r0" ref="r20" lane="2" name="C1540.MP4" tcFormat="NDF" duration="5184/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1495344/25s" offset="825643/25s" format="r0" ref="r21" lane="2" name="C1541.MP4" tcFormat="NDF" duration="18072/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="971922/25s" offset="820459/25s" format="r0" ref="r40" lane="3" name="C1442.MP4" tcFormat="NDF" duration="216/5s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="973156/25s" offset="821539/25s" format="r0" ref="r41" lane="3" name="C1443.MP4" tcFormat="NDF" duration="132/5s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="194774/5s" offset="822199/25s" format="r0" ref="r42" lane="3" name="C1444.MP4" tcFormat="NDF" duration="3252/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="978402/25s" offset="825451/25s" format="r0" ref="r43" lane="3" name="C1445.MP4" tcFormat="NDF" duration="1656/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="39581/1s" offset="827107/25s" format="r0" ref="r44" lane="3" name="C1446.MP4" tcFormat="NDF" duration="9768/5s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1953959/25s" offset="820459/25s" format="r0" ref="r59" lane="4" name="D0001.MP4" tcFormat="NDF" duration="24/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="2031053/25s" offset="820483/25s" format="r0" ref="r60" lane="4" name="D0002.MP4" tcFormat="NDF" duration="24/5s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="2067136/25s" offset="820603/25s" format="r0" ref="r61" lane="4" name="D0003.MP4" tcFormat="NDF" duration="48816/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1486668/25s" offset="820459/25s" format="r0" ref="r75" lane="5" name="C3522.MP4" tcFormat="NDF" duration="141444/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1552863/25s" offset="820459/25s" format="r0" ref="r79" lane="6" name="DJI_20260101031929_0001_D.MP4" tcFormat="NDF" duration="1/5s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1554051/25s" offset="820464/25s" format="r0" ref="r80" lane="6" name="DJI_20260101032017_0002_D.MP4" tcFormat="NDF" duration="48077/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="48701653/10000s" offset="820459/25s" format="r85" ref="r86" lane="7" name="DJI_20261002171532_0033_D.MP4" tcFormat="NDF" duration="7/5s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="401949/25s" offset="820494/25s" format="r0" ref="r87" lane="7" name="DJI_20261002202220_0034_D.MP4" tcFormat="NDF" duration="49177/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="116286541/3000s" offset="820459/25s" ref="r90" lane="23" name="T1_0001A.wav" duration="295304/25s"/>
+                            <asset-clip enabled="1" start="77442552427/1998000s" offset="820459/25s" ref="r91" lane="24" name="T2_0001A.wav" duration="276906/25s"/>
+                            <asset-clip enabled="1" start="77445953897/1998000s" offset="820459/25s" ref="r92" lane="25" name="T3_0002A.wav" duration="276787/25s"/>
+                        </asset-clip>
+                        <asset-clip enabled="1" start="827803/25s" offset="7344/25s" format="r0" ref="r2" name="A_20261003_5585.MP4" tcFormat="NDF" duration="3168/25s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                        </asset-clip>
+                        <asset-clip enabled="1" start="830971/25s" offset="10512/25s" format="r0" ref="r3" name="A_20261003_5586.MP4" tcFormat="NDF" duration="2772/25s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                        </asset-clip>
+                        <asset-clip enabled="1" start="833743/25s" offset="13284/25s" format="r0" ref="r4" name="A_20261003_5587.MP4" tcFormat="NDF" duration="408/5s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                        </asset-clip>
+                        <asset-clip enabled="1" start="835783/25s" offset="15324/25s" format="r0" ref="r5" name="A_20261003_5588.MP4" tcFormat="NDF" duration="108/25s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                        </asset-clip>
+                        <asset-clip enabled="1" start="835891/25s" offset="15432/25s" format="r0" ref="r6" name="A_20261003_5589.MP4" tcFormat="NDF" duration="312/25s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                        </asset-clip>
+                        <asset-clip enabled="1" start="836203/25s" offset="15744/25s" format="r0" ref="r7" name="A_20261003_5590.MP4" tcFormat="NDF" duration="1548/25s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                        </asset-clip>
+                        <asset-clip enabled="1" start="837751/25s" offset="17292/25s" format="r0" ref="r8" name="A_20261003_5591.MP4" tcFormat="NDF" duration="528/25s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                        </asset-clip>
+                        <asset-clip enabled="1" start="838279/25s" offset="3564/5s" format="r0" ref="r9" name="A_20261003_5592.MP4" tcFormat="NDF" duration="252/25s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                        </asset-clip>
+                        <asset-clip enabled="1" start="838603/25s" offset="18072/25s" format="r0" ref="r10" name="A_20261003_5594.MP4" tcFormat="NDF" duration="468/25s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                        </asset-clip>
+                        <asset-clip enabled="1" start="839071/25s" offset="3708/5s" format="r0" ref="r11" name="A_20261003_5595.MP4" tcFormat="NDF" duration="3552/25s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                        </asset-clip>
+                        <asset-clip enabled="1" start="842623/25s" offset="22092/25s" format="r0" ref="r12" name="A_20261003_5596.MP4" tcFormat="NDF" duration="144/25s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                        </asset-clip>
+                        <asset-clip enabled="1" start="842767/25s" offset="22236/25s" format="r0" ref="r13" name="A_20261003_5597.MP4" tcFormat="NDF" duration="696/25s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                        </asset-clip>
+                        <asset-clip enabled="1" start="843463/25s" offset="22932/25s" format="r0" ref="r14" name="A_20261003_5598.MP4" tcFormat="NDF" duration="96/5s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            <asset-clip enabled="1" start="1513416/25s" offset="843787/25s" format="r0" ref="r22" lane="2" name="C1542.MP4" tcFormat="NDF" duration="28992/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                        </asset-clip>
+                        <asset-clip enabled="1" start="843943/25s" offset="23412/25s" format="r15" ref="r16" name="A_20261003_5599.MP4" tcFormat="NDF" duration="132/5s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                        </asset-clip>
+                        <asset-clip enabled="1" start="844603/25s" offset="24072/25s" format="r15" ref="r17" name="A_20261003_5600.MP4" tcFormat="NDF" duration="204/5s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                        </asset-clip>
+                        <gap start="3600/1s" offset="25092/25s" name="Gap" duration="270212/25s">
+                            <asset-clip enabled="1" start="1146843/25s" offset="47124/5s" format="r0" ref="r19" lane="1" name="E20261003_9381.MP4" tcFormat="NDF" duration="118428/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1542408/25s" offset="117156/25s" format="r0" ref="r23" lane="2" name="C1543.MP4" tcFormat="NDF" duration="15516/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1557924/25s" offset="132672/25s" format="r0" ref="r24" lane="2" name="C1544.MP4" tcFormat="NDF" duration="372/1s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1567224/25s" offset="141972/25s" format="r0" ref="r25" lane="2" name="C1545.MP4" tcFormat="NDF" duration="3948/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1571172/25s" offset="29184/5s" format="r0" ref="r26" lane="2" name="C1546.MP4" tcFormat="NDF" duration="576/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1571748/25s" offset="146496/25s" format="r0" ref="r27" lane="2" name="C1547.MP4" tcFormat="NDF" duration="18108/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1589856/25s" offset="164604/25s" format="r0" ref="r28" lane="2" name="C1548.MP4" tcFormat="NDF" duration="3936/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1593792/25s" offset="33708/5s" format="r0" ref="r29" lane="2" name="C1549.MP4" tcFormat="NDF" duration="17064/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1610856/25s" offset="185604/25s" format="r15" ref="r30" lane="2" name="C1550.MP4" tcFormat="NDF" duration="3132/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1613988/25s" offset="188736/25s" format="r0" ref="r31" lane="2" name="C1551.MP4" tcFormat="NDF" duration="8472/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="324492/5s" offset="197208/25s" format="r15" ref="r32" lane="2" name="C1552.MP4" tcFormat="NDF" duration="2652/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1625112/25s" offset="39972/5s" format="r15" ref="r33" lane="2" name="C1553.MP4" tcFormat="NDF" duration="2664/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1627776/25s" offset="202524/25s" format="r0" ref="r34" lane="2" name="C1554.MP4" tcFormat="NDF" duration="6384/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="326832/5s" offset="208908/25s" format="r0" ref="r35" lane="2" name="C1555.MP4" tcFormat="NDF" duration="2976/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1637136/25s" offset="211884/25s" format="r0" ref="r36" lane="2" name="C1556.MP4" tcFormat="NDF" duration="11148/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1648284/25s" offset="223032/25s" format="r0" ref="r37" lane="2" name="C1557.MP4" tcFormat="NDF" duration="2472/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1650756/25s" offset="225504/25s" format="r0" ref="r38" lane="2" name="C1558.MP4" tcFormat="NDF" duration="7176/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1657932/25s" offset="46536/5s" format="r0" ref="r39" lane="2" name="C1559.MP4" tcFormat="NDF" duration="516/1s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1042612/25s" offset="120396/25s" format="r0" ref="r45" lane="3" name="C1447.MP4" tcFormat="NDF" duration="10992/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1053917/25s" offset="131388/25s" format="r0" ref="r46" lane="3" name="C1448.MP4" tcFormat="NDF" duration="21468/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1076861/25s" offset="152856/25s" format="r0" ref="r47" lane="3" name="C1449.MP4" tcFormat="NDF" duration="15504/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1093179/25s" offset="33672/5s" format="r0" ref="r48" lane="3" name="C1450.MP4" tcFormat="NDF" duration="29964/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1124519/25s" offset="198324/25s" format="r0" ref="r49" lane="3" name="C1451.MP4" tcFormat="NDF" duration="4176/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1129447/25s" offset="8100/1s" format="r0" ref="r50" lane="3" name="C1452.MP4" tcFormat="NDF" duration="3168/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1134967/25s" offset="205668/25s" format="r0" ref="r51" lane="3" name="C1453.MP4" tcFormat="NDF" duration="5076/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="228322/5s" offset="210744/25s" format="r0" ref="r52" lane="3" name="C1454.MP4" tcFormat="NDF" duration="6912/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1170548/25s" offset="217656/25s" format="r0" ref="r53" lane="3" name="C1455.MP4" tcFormat="NDF" duration="9876/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1182864/25s" offset="227532/25s" format="r0" ref="r54" lane="3" name="C1456.MP4" tcFormat="NDF" duration="14124/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1198551/25s" offset="241656/25s" format="r0" ref="r55" lane="3" name="C1457.MP4" tcFormat="NDF" duration="7428/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1206709/25s" offset="249084/25s" format="r0" ref="r56" lane="3" name="C1458.MP4" tcFormat="NDF" duration="1416/5s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1215824/25s" offset="256164/25s" format="r0" ref="r57" lane="3" name="C1459.MP4" tcFormat="NDF" duration="11556/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1227594/25s" offset="53544/5s" format="r0" ref="r58" lane="3" name="C1460.MP4" tcFormat="NDF" duration="13212/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="2120012/25s" offset="113868/25s" format="r0" ref="r62" lane="4" name="D0004.MP4" tcFormat="NDF" duration="7752/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="2130799/25s" offset="24324/5s" format="r0" ref="r63" lane="4" name="D0005.MP4" tcFormat="NDF" duration="2652/5s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="2144123/25s" offset="26976/5s" format="r0" ref="r64" lane="4" name="D0006.MP4" tcFormat="NDF" duration="1644/5s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="2156366/25s" offset="5724/1s" format="r0" ref="r65" lane="4" name="D0007.MP4" tcFormat="NDF" duration="8412/5s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="8081/5s" offset="37032/5s" format="r0" ref="r66" lane="4" name="D0008.MP4" tcFormat="NDF" duration="26496/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="17728/5s" offset="211656/25s" format="r0" ref="r67" lane="4" name="D0009.MP4" tcFormat="NDF" duration="25296/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="23353/5s" offset="236952/25s" format="r0" ref="r68" lane="4" name="D0010.MP4" tcFormat="NDF" duration="15456/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="133136/25s" offset="252408/25s" format="r0" ref="r69" lane="4" name="D0011.MP4" tcFormat="NDF" duration="9876/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="29151/5s" offset="262284/25s" format="r0" ref="r70" lane="4" name="D0012.MP4" tcFormat="NDF" duration="6732/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="152714/25s" offset="269016/25s" format="r0" ref="r71" lane="4" name="D0013.MP4" tcFormat="NDF" duration="2856/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="156751/25s" offset="271872/25s" format="r0" ref="r72" lane="4" name="D0014.MP4" tcFormat="NDF" duration="60/1s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="167524/25s" offset="273372/25s" format="r0" ref="r73" lane="4" name="D0015.MP4" tcFormat="NDF" duration="384/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="167941/25s" offset="273756/25s" format="r0" ref="r74" lane="4" name="D0016.MP4" tcFormat="NDF" duration="2076/5s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1628112/25s" offset="206352/25s" format="r0" ref="r76" lane="5" name="C3523.MP4" tcFormat="NDF" duration="29676/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1657788/25s" offset="236028/25s" format="r0" ref="r77" lane="5" name="C3524.MP4" tcFormat="NDF" duration="12/5s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1657848/25s" offset="236088/25s" format="r0" ref="r78" lane="5" name="C3525.MP4" tcFormat="NDF" duration="92124/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1602127/25s" offset="22598/5s" format="r0" ref="r81" lane="6" name="DJI_20260101035221_0003_D.MP4" tcFormat="NDF" duration="48512/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1650639/25s" offset="161502/25s" format="r0" ref="r82" lane="6" name="DJI_20260101042442_0004_D.MP4" tcFormat="NDF" duration="38/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1669982/25s" offset="32308/5s" format="r0" ref="r83" lane="6" name="DJI_20260101043734_0006_D.MP4" tcFormat="NDF" duration="48278/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="1718259/25s" offset="209818/25s" format="r0" ref="r84" lane="6" name="DJI_20260101050946_0007_D.MP4" tcFormat="NDF" duration="34517/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="18045/1s" offset="22824/5s" format="r0" ref="r88" lane="7" name="DJI_20261002205509_0035_D.MP4" tcFormat="NDF" duration="48093/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                            <asset-clip enabled="1" start="499218/25s" offset="162213/25s" format="r0" ref="r89" lane="7" name="DJI_20261002212712_0036_D.MP4" tcFormat="NDF" duration="31197/25s">
+                                <adjust-transform position="0 0" scale="1 1" anchor="0 0"/>
+                            </asset-clip>
+                        </gap>
+                    </spine>
+                </sequence>
+            </project>
+        </event>
+    </library>
+</fcpxml>
