@@ -78,7 +78,7 @@ What an established commercial sync tool did with a real shoot (90 files, 11 dev
 | Live view while syncing | **Real clips moving into place** | progress bar |
 | Export for Resolve / Premiere | **XML with fixed tracks per device and channel** | XML / FCPXML |
 | Duplicated files | **Detected, kept on their own tracks** | – |
-| Price | **Free, MIT** | commercial |
+| Price | **Free to use** | commercial |
 
 ## Accuracy
 
@@ -181,7 +181,8 @@ Donations are optional; the app stays free.
 
 ## License
 
-MIT – see [LICENSE](LICENSE). Bundled: Public Sans (SIL OFL 1.1,
+Proprietary – free to use, source published for transparency, not open
+source. See [LICENSE](LICENSE). Bundled: Public Sans (SIL OFL 1.1,
 `lzsync/ui/assets/OFL-public-sans.txt`); the Windows EXE contains ffmpeg (GPL,
 [gyan.dev builds](https://www.gyan.dev/ffmpeg/builds/)). The Lars Zumpe
-Medienproduktion logo and signet are not covered by the MIT license.
+Medienproduktion logo and signet are trademarks of Lars Zumpe.

@@ -22,7 +22,7 @@
       document.body.append(probe);
       const get = (v) => { probe.style.color = `var(${v})`; return getComputedStyle(probe).color; };
       this.c = {
-        bg: get('--surface-0'), lane: get('--surface-1'), line: get('--line-1'), line2: get('--line-2'),
+        bg: get('--surface-0'), lane: get('--surface-2'), line: get('--line-1'), line2: get('--line-2'),
         text: get('--text-muted'), strong: get('--text-strong'), accent: get('--accent'),
         steel: get('--stahlblau'), line3: get('--line-3'),
       };
