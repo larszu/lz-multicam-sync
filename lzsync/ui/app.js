@@ -197,6 +197,7 @@ window.addEventListener('pywebviewready', async () => {
 });
 
 /* Vorschau ohne Python (Screenshots, Gestaltung): index.html?demo=result */
+const DEMO_VERSION = '0.5.0';  /* mit pyproject.toml mitziehen (tests/test_ui_version.py) */
 const qp = new URLSearchParams(location.search);
 if (qp.get('theme')) setTheme(qp.get('theme'));
 function demoOverview() {
@@ -223,7 +224,7 @@ function demoOverview() {
   });
 }
 if (qp.get('demo') === '1' || qp.get('demo') === 'result') {
-  $('version').textContent = 'v0.4.0';
+  $('version').textContent = 'v' + DEMO_VERSION;
   setSource('/Volumes/MEDIA/DEMO/Multicam-Dreh.fcpxmld');
   app.done(demoOverview());
 }
@@ -272,7 +273,7 @@ if (qp.get('demo') === 'sim') {
     k: c.k, start: c.dev === 'OTHER' ? null : truth.get(c.k), group: c.dev === 'OTHER' ? 1 : 0,
     method: c.dev === 'OTHER' ? 'unplaced' : c.dur < 20 ? 'chronology' : 'audio' })) }]);
   setSource('/Volumes/MEDIA/DEMO/Multicam-Dreh.fcpxmld');
-  $('version').textContent = 'v0.4.0';
+  $('version').textContent = 'v' + DEMO_VERSION;
   show('running');
   let i = 0;
   const speed = Number(qp.get('speed') || 1);

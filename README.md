@@ -59,7 +59,10 @@
   all audio channels.
 
 <p align="center">
-  <img src="docs/screenshots/live-timeline.gif" alt="Live timeline: clips start in input order, audio matches pull them into place, the solver settles the final positions" width="820" />
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="docs/screenshots/live-timeline-light.gif" />
+    <img src="docs/screenshots/live-timeline-dark.gif" alt="Live timeline: clips start in input order, audio matches pull them into place, the solver settles the final positions" width="820" />
+  </picture>
 </p>
 
 ## How it compares
