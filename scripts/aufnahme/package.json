@@ -1,0 +1,8 @@
+{
+  "name": "lzsync-aufnahme",
+  "private": true,
+  "type": "module",
+  "description": "Nimmt die README-Animation der Live-Timeline auf (Demo-Ablauf, ohne Python).",
+  "scripts": { "live-timeline": "node live-timeline.mjs" },
+  "devDependencies": { "playwright-core": "1.56.1" }
+}
